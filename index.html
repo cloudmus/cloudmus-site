@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+<script src="assets/js/dc-runtime.js"></script>
 </head>
 <body>
 <x-dc>
@@ -21,7 +21,7 @@ a:hover{color:#ffa07f}
 @keyframes cmDrift3{0%{transform:translate(0,0)}50%{transform:translate(4vw,-8vh)}100%{transform:translate(0,0)}}
 @keyframes cmEq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
 </style>
-<script src="./image-slot.js"></script>
+<script src="assets/js/image-slot.js"></script>
 </helmet>
 
 <div style="position:relative;min-height:100vh;overflow:clip;background:#15110f">
@@ -33,7 +33,7 @@ a:hover{color:#ffa07f}
       <div ref="{{ navBg }}" aria-hidden="true" style="position:absolute;top:14px;bottom:14px;left:max(clamp(16px,4vw,48px),calc((100% - 1200px) / 2));right:max(clamp(16px,4vw,48px),calc((100% - 1200px) / 2));border-radius:16px;background:rgba(30,24,21,.55);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:1px solid rgba(255,255,255,.08);transition:top .45s cubic-bezier(.2,.8,.2,1),bottom .45s cubic-bezier(.2,.8,.2,1),left .45s cubic-bezier(.2,.8,.2,1),right .45s cubic-bezier(.2,.8,.2,1),border-radius .45s cubic-bezier(.2,.8,.2,1),border-color .45s,background .45s;pointer-events:none"></div>
       <nav style="position:relative;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 12px 10px 16px;border:1px solid transparent">
         <a href="#top" style="display:flex;align-items:center;gap:10px;color:#f3ede9">
-          <img src="uploads/logo.svg" alt="CloudMus" style="width:30px;height:30px;display:block">
+          <img src="assets/img/logo.svg" alt="CloudMus" style="width:30px;height:30px;display:block">
           <span style="font-family:Rubik,sans-serif;font-weight:700;font-size:17px;letter-spacing:-.01em">CloudMus</span>
         </a>
         <div style="display:flex;align-items:center;gap:clamp(12px,2.4vw,28px);font-size:14px;font-weight:600;flex-wrap:wrap;justify-content:flex-end">
@@ -71,7 +71,7 @@ a:hover{color:#ffa07f}
       <div style="position:relative;margin:0 auto;max-width:1120px">
         <div style="position:absolute;inset:8% 6% -4%;background:radial-gradient(closest-side,rgba(255,90,43,.4),rgba(255,90,43,.12) 60%,transparent)"></div>
         <div style="position:relative;border-radius:18px;padding:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);box-shadow:0 40px 120px -20px rgba(0,0,0,.8)">
-          <img src="uploads/изображение.png" alt="CloudMus: плеер и окно «О программе»" style="display:block;width:100%;height:auto;border-radius:12px">
+          <img src="assets/img/app-screenshot.png" alt="CloudMus: плеер и окно «О программе»" style="display:block;width:100%;height:auto;border-radius:12px">
         </div>
       </div>
     </section>
@@ -231,7 +231,7 @@ a:hover{color:#ffa07f}
       </div>
       <div style="position:relative;max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,48px);display:flex;justify-content:space-between;align-items:center;gap:16px 32px;flex-wrap:wrap;font-size:14px;color:#9a8d85">
         <div style="display:flex;align-items:center;gap:10px">
-          <img src="uploads/logo.svg" alt="" style="width:22px;height:22px;display:block">
+          <img src="assets/img/logo.svg" alt="" style="width:22px;height:22px;display:block">
           <span>CloudMus · лицензия MIT · Vladislav Navrocky</span>
         </div>
         <div style="display:flex;gap:24px;flex-wrap:wrap">
@@ -565,8 +565,8 @@ class Component extends DCLogic {
       secondaryLabel: os === 'linux' ? 'Windows' : 'Linux',
       showSoon: this.props.showRoadmap ?? true,
       services: [
-        { name: 'Яндекс Музыка', icon: 'logos/yandex-music.svg', tag: '', rows: [{ k: 'Подборки', v: 'Моя волна, Мне нравится, Плейлист дня, Премьера, Дежавю' }, { k: 'Библиотека', v: 'Ваши плейлисты и лайки' }, { k: 'Вход', v: 'Через аккаунт Яндекса' }] },
-        { name: 'YouTube Music', icon: 'logos/youtube-music.svg', tag: '', rows: [{ k: 'Подборки', v: 'Понравившиеся, My Supermix' }, { k: 'Библиотека', v: 'Плейлисты аккаунта' }, { k: 'Вход', v: 'Через аккаунт Google' }] },
+        { name: 'Яндекс Музыка', icon: 'assets/img/services/yandex-music.svg', tag: '', rows: [{ k: 'Подборки', v: 'Моя волна, Мне нравится, Плейлист дня, Премьера, Дежавю' }, { k: 'Библиотека', v: 'Ваши плейлисты и лайки' }, { k: 'Вход', v: 'Через аккаунт Яндекса' }] },
+        { name: 'YouTube Music', icon: 'assets/img/services/youtube-music.svg', tag: '', rows: [{ k: 'Подборки', v: 'Понравившиеся, My Supermix' }, { k: 'Библиотека', v: 'Плейлисты аккаунта' }, { k: 'Вход', v: 'Через аккаунт Google' }] },
         { name: 'Локальная папка', folder: true, tag: '', rows: [{ k: 'Источник', v: 'Любая папка на диске' }, { k: 'Плейлисты', v: 'Вложенные папки и M3U' }, { k: 'Теги', v: 'Обложки и метаданные из файлов' }] }
       ].map(s => ({ ...s, iconEl: s.icon ? React.createElement('img', { src: s.icon, alt: '', style: { width: 28, height: 28, display: 'block' } }) : null })),
       soon: [['SoundCloud', 'logo-soundcloud'], ['VK Музыка', 'logo-vk-music'], ['Spotify', 'logo-spotify'], ['Deezer', 'logo-deezer'], ['Bandcamp', 'logo-bandcamp'], ['Apple Music', 'logo-apple-music'], ['TuneIn', 'logo-tunein']].map(([name]) => ({ name, slot: '', text: true })),
