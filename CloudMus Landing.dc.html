@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+html,body{margin:0;background:#15110f;color:#f3ede9;font-family:Rubik,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#ff7a4d;text-decoration:none}
+a:hover{color:#ffa07f}
+@keyframes cmDrift1{0%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,6vh) scale(1.15)}100%{transform:translate(0,0) scale(1)}}
+@keyframes cmDrift2{0%{transform:translate(0,0) scale(1.1)}50%{transform:translate(-10vw,-4vh) scale(.9)}100%{transform:translate(0,0) scale(1.1)}}
+@keyframes cmDrift3{0%{transform:translate(0,0)}50%{transform:translate(4vw,-8vh)}100%{transform:translate(0,0)}}
+@keyframes cmEq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div style="position:relative;min-height:100vh;overflow:clip;background:#15110f">
+  {{ backdrop }}
+
+  <div style="position:relative;z-index:1">
+
+    <header style="position:sticky;top:0;z-index:10;padding:14px clamp(16px,4vw,48px)">
+      <div ref="{{ navBg }}" aria-hidden="true" style="position:absolute;top:14px;bottom:14px;left:max(clamp(16px,4vw,48px),calc((100% - 1200px) / 2));right:max(clamp(16px,4vw,48px),calc((100% - 1200px) / 2));border-radius:16px;background:rgba(30,24,21,.55);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:1px solid rgba(255,255,255,.08);transition:top .45s cubic-bezier(.2,.8,.2,1),bottom .45s cubic-bezier(.2,.8,.2,1),left .45s cubic-bezier(.2,.8,.2,1),right .45s cubic-bezier(.2,.8,.2,1),border-radius .45s cubic-bezier(.2,.8,.2,1),border-color .45s,background .45s;pointer-events:none"></div>
+      <nav style="position:relative;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 12px 10px 16px;border:1px solid transparent">
+        <a href="#top" style="display:flex;align-items:center;gap:10px;color:#f3ede9">
+          <img src="uploads/logo.svg" alt="CloudMus" style="width:30px;height:30px;display:block">
+          <span style="font-family:Rubik,sans-serif;font-weight:700;font-size:17px;letter-spacing:-.01em">CloudMus</span>
+        </a>
+        <div style="display:flex;align-items:center;gap:clamp(12px,2.4vw,28px);font-size:14px;font-weight:600;flex-wrap:wrap;justify-content:flex-end">
+          <a href="#services" style="color:#cfc4bd">Сервисы</a>
+          <a href="#features" style="color:#cfc4bd">Возможности</a>
+          <a href="#download" style="color:#cfc4bd">Скачать</a>
+          <a href="https://github.com/cloudmus/cloudmus" target="_blank" aria-label="GitHub" title="GitHub" style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#f3ede9"><svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor" aria-hidden="true" style="display:block"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+        </div>
+      </nav>
+    </header>
+
+    <section id="top" style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,48px);text-align:center">
+      <div style="min-height:calc(100svh - 84px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(8px,1.8vh,22px);padding:clamp(4px,1.5vh,24px) 0 clamp(16px,3vh,40px)">
+      <div style="display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:13px;color:#cfc4bd;font-weight:600;white-space:nowrap">
+        <span style="display:flex;align-items:flex-end;gap:2px;height:14px;padding:0 4px">{{ eq }}</span>
+        Кроссплатформенный музыкальный плеер
+      </div>
+      <div style="position:relative;margin:0 auto;width:100%;height:clamp(130px,min(34vw,36vh),420px);display:flex;align-items:center;justify-content:center">
+        <div ref="{{ heroCanvas }}" aria-hidden="true" style="position:absolute;left:50%;top:50%;width:100vw;height:100svh;min-height:600px;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;overflow:hidden;contain:strict"></div>
+        <svg ref="{{ heroLogo }}" viewBox="0 0 16 16" aria-label="CloudMus" style="position:relative;display:block;height:clamp(110px,min(26vw,28vh),320px);width:auto;aspect-ratio:1;overflow:visible;will-change:transform">
+          <g ref="{{ lgCloud }}" style="transform-origin:8px 8px;will-change:transform"><path fill="#ffffff" transform="translate(0,-1036.3622)" d="M 10.805134,1038.3656 c -0.8362928,0 -1.7080148,0.3356 -2.2734378,1.0332 a 5.0000003,4.9999737 0 0 1 4.4687498,4.9668 5.0000003,4.9999737 0 0 1 -4.8457028,4.9922 c 1.9267958,0 3.9492808,0.01 5.7070308,0 1.185276,-0.029 2.138672,-1.0927 2.138672,-2.4024 0,-1.0484 -0.609309,-1.9363 -1.460938,-2.2656 0.226555,-0.5585 0.353516,-1.1769 0.353516,-1.8281 0,-2.4817 -1.829407,-4.4961 -4.08789,-4.4961 z M 5.6996652,1039.5844 c -1.401019,-0.067 -2.481787,1.1337 -2.289063,2.4375 -2.3248568,-0.6557 -3.37528284,1.5189 -3.41015594317,3.6933 -0.0286499968,1.7521 1.32587614317,3.6065 3.00585894317,3.6426 1.725453,0 3.305552,0 4.994141,0 l 0,-0.9922 a 4.0000001,3.999963 0 0 1 -4,-4 4.0000001,3.999963 0 0 1 3.679688,-3.9844 c -0.393282,-0.4851 -0.974408,-0.8156 -1.980469,-0.7968 z"></path></g>
+          <g ref="{{ lgRing1 }}" style="transform-origin:8px 8px;will-change:transform"><path fill="#ffffff" transform="translate(0,-1036.3622)" d="M 8.0004462,1048.3656 a 4.0000001,3.999963 0 0 0 3.9999998,-4 4.0000001,3.999963 0 0 0 -3.9570308,-3.998 c -0.01629,0.059 -0.02759,0.122 -0.04297,0.1816 l 0,0.8164 a 3.0000003,2.9999238 0 0 1 2.9999998,3 3.0000003,2.9999238 0 0 1 -2.9999998,3 l 0,1 z"></path></g>
+          <g ref="{{ lgRing2 }}" style="transform-origin:8px 8px;will-change:transform"><path fill="#ffffff" transform="translate(0,-1036.3622)" d="M 8.0004462,1047.3656 l 0,-1 a 2.0000001,1.999963 0 0 1 -2,-2 2.0000001,1.999963 0 0 1 2,-2 l 0,-1 a 3.0000001,2.9999629 0 0 0 -3,3 3.0000001,2.9999629 0 0 0 3,3 z"></path></g>
+          <g ref="{{ lgCore }}" style="transform-origin:8px 8px;will-change:transform"><path fill="#ffffff" transform="translate(0,-1036.3622)" d="M 8.0004462,1042.3656 l 0,4 a 2.0000001,1.999963 0 0 0 1.9999998,-2 2.0000001,1.999963 0 0 0 -1.9999998,-2 z"></path></g>
+        </svg>
+      </div>
+      <h1 style="margin:0 auto;max-width:980px;font-family:Rubik,sans-serif;font-weight:800;font-size:clamp(36px,min(7.2vw,8.5vh),92px);line-height:.98;letter-spacing:-.035em;text-wrap:balance">CloudMus</h1>
+      <p style="margin:-4px auto 0;font-family:Rubik,sans-serif;font-weight:500;font-size:clamp(20px,min(2.6vw,3.4vh),32px);letter-spacing:-.01em;line-height:1.2;text-wrap:balance;color:#ff5a2b">Слушайте свои облака с удовольствием</p>
+            <div style="margin-top:clamp(6px,1.6vh,16px);display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+        <a href="https://github.com/cloudmus/cloudmus/releases/latest" target="_blank" style="display:flex;align-items:center;gap:10px;padding:clamp(11px,2vh,16px) 26px;border-radius:999px;background:#ff5a2b;color:#fff;font-weight:700;font-size:16px;white-space:nowrap;box-shadow:0 10px 40px -8px rgba(255,90,43,.6)" style-hover="background:#ff6e42;color:#fff">{{ primaryIcon }}{{ primaryLabel }}</a>
+        <a href="#download" style="display:flex;align-items:center;gap:10px;padding:clamp(11px,2vh,16px) 24px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#f3ede9;font-weight:600;font-size:16px;white-space:nowrap" style-hover="background:rgba(255,255,255,.12);color:#fff">{{ secondaryIcon }}{{ secondaryLabel }}</a>
+      </div>
+      </div>
+
+      <div style="position:relative;margin:0 auto;max-width:1120px">
+        <div style="position:absolute;inset:8% 6% -4%;background:radial-gradient(closest-side,rgba(255,90,43,.4),rgba(255,90,43,.12) 60%,transparent)"></div>
+        <div style="position:relative;border-radius:18px;padding:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);box-shadow:0 40px 120px -20px rgba(0,0,0,.8)">
+          <img src="uploads/изображение.png" alt="CloudMus: плеер и окно «О программе»" style="display:block;width:100%;height:auto;border-radius:12px">
+        </div>
+      </div>
+    </section>
+
+    <section id="services" style="max-width:1200px;margin:0 auto;padding:clamp(80px,12vw,150px) clamp(16px,4vw,48px) 0">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:40px;align-items:end">
+        <h2 style="margin:0;font-family:Rubik,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,54px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance">Поддерживаемые источники</h2>
+      </div>
+
+      <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="3">
+          <div style="padding:28px;border-radius:20px;background:rgba(36,29,25,.6);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:22px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <div style="display:flex;align-items:center;gap:14px;min-width:0">
+                <sc-if value="{{ s.slot }}" hint-placeholder-val="{{ true }}">
+                  <div style="width:44px;height:44px;flex:none;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06)">
+                    <image-slot id="{{ s.slot }}" shape="rounded" radius="12" fit="contain" placeholder="{{ s.ph }}"></image-slot>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ s.icon }}" hint-placeholder-val="{{ false }}">
+                  <div style="width:44px;height:44px;flex:none;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center">
+                    {{ s.iconEl }}
+                  </div>
+                </sc-if>
+                <sc-if value="{{ s.folder }}" hint-placeholder-val="{{ false }}">
+                  <div style="width:44px;height:44px;flex:none;border-radius:12px;background:rgba(255,90,43,.14);display:flex;align-items:center;justify-content:center">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#ff7a4d" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4.4l2 2.2h8.6A1.5 1.5 0 0 1 21 9.7v8.8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"></path></svg>
+                  </div>
+                </sc-if>
+                <div style="font-family:Rubik,sans-serif;font-weight:700;font-size:21px;letter-spacing:-.02em">{{ s.name }}</div>
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#ff7a4d">{{ s.tag }}</div>
+            </div>
+            <div style="display:flex;flex-direction:column">
+              <sc-for list="{{ s.rows }}" as="r" hint-placeholder-count="4">
+                <div style="display:grid;grid-template-columns:110px 1fr;gap:12px;padding:11px 0;border-top:1px solid rgba(255,255,255,.07);font-size:14px;line-height:1.45">
+                  <span style="color:#9a8d85">{{ r.k }}</span>
+                  <span style="color:#f3ede9">{{ r.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ showSoon }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:16px;padding:22px 28px;border-radius:20px;display:flex;align-items:center;gap:14px 24px;flex-wrap:wrap">
+          <span style="font-family:Rubik,sans-serif;font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#9a8d85">В планах</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ soon }}" as="x" hint-placeholder-count="7">
+              <sc-if value="{{ x.slot }}" hint-placeholder-val="{{ true }}">
+                <div title="{{ x.name }}" style="width:112px;height:40px;border-radius:10px;overflow:hidden;background:rgba(255,255,255,.05)">
+                  <image-slot id="{{ x.slot }}" shape="rounded" radius="10" fit="contain" placeholder="{{ x.name }}"></image-slot>
+                </div>
+              </sc-if>
+              <sc-if value="{{ x.text }}" hint-placeholder-val="{{ false }}">
+                <span style="display:flex;align-items:center;height:40px;padding:0 16px;border-radius:999px;background:rgba(255,255,255,.05);font-size:14px;font-weight:600;color:#cfc4bd">{{ x.name }}</span>
+              </sc-if>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+
+    <section id="features" style="max-width:1200px;margin:0 auto;padding:clamp(80px,12vw,150px) clamp(16px,4vw,48px) 0">
+      <h2 style="margin:0;max-width:760px;font-family:Rubik,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,54px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance">Возможности</h2>
+      <div ref="{{ cloudGridRef }}" style="position:relative;margin-top:56px;min-height:600px">
+        <canvas ref="{{ featCanvas }}" aria-hidden="true" style="position:absolute;left:-8%;top:-6%;width:116%;height:112%;pointer-events:none"></canvas>
+        <div ref="{{ bgLayer }}" aria-hidden="true" style="position:absolute;left:-8%;top:-6%;width:116%;height:112%;pointer-events:none"></div>
+        <sc-for list="{{ features }}" as="f" hint-placeholder-count="9">
+          <div data-cloud="1" style="position:absolute;left:0;top:0;width:300px;height:200px;will-change:transform">
+            <svg data-cloud-shape="1" viewBox="0.3 2.6 15.3 10.2" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible"><g fill="rgb(255,240,232)" opacity=".12"><circle cx="3.4" cy="9.4" r="2.9"></circle><circle cx="7.2" cy="6.6" r="3.8"></circle><circle cx="11.4" cy="7.6" r="3"></circle><circle cx="13" cy="10" r="2.4"></circle><circle cx="8.2" cy="9.6" r="3"></circle></g></svg>
+            <div style="position:relative;height:200px;padding:62px 44px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px">
+              <h3 style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.01em;text-wrap:balance">{{ f.t }}</h3>
+              <p style="margin:0;font-size:15px;line-height:1.5;color:#e2d6ce;text-wrap:pretty">{{ f.d }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="download" style="max-width:1200px;margin:0 auto;padding:clamp(80px,12vw,150px) clamp(16px,4vw,48px) 0">
+      <div style="text-align:center">
+        <h2 style="margin:0;font-family:Rubik,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,54px);line-height:1.04;letter-spacing:-.03em">Скачать CloudMus</h2>
+        <p style="margin:18px auto 0;max-width:520px;font-size:17px;line-height:1.6;color:#cfc4bd">Установщик для Windows и AppImage для Linux на <a href="https://github.com/cloudmus/cloudmus/releases" target="_blank" style="color:#ff7a4d;text-decoration:underline;text-underline-offset:3px;white-space:nowrap" style-hover="color:#ffa07f">странице релизов</a>.</p>
+      </div>
+      <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px">
+
+        <div style="padding:clamp(24px,3vw,36px);border-radius:22px;background:rgba(36,29,25,.42);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <h3 style="margin:0;display:flex;align-items:center;gap:12px;font-family:Rubik,sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em"><svg viewBox="0 0 24 24" width="26" height="26" fill="#f3ede9" aria-hidden="true" style="display:block;flex:none"><rect x="2" y="2" width="9.5" height="9.5" rx="1"></rect><rect x="12.5" y="2" width="9.5" height="9.5" rx="1"></rect><rect x="2" y="12.5" width="9.5" height="9.5" rx="1"></rect><rect x="12.5" y="12.5" width="9.5" height="9.5" rx="1"></rect></svg>Windows</h3>
+            <span style="font-size:14px;color:#9a8d85">Windows 10 или 11, x64</span>
+          </div>
+          <div style="padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.3);font-family:'JetBrains Mono',monospace;font-size:13px;color:#e8ddd6;overflow-x:auto">CloudMus-&lt;version&gt;-x86_64-Setup.exe</div>
+          <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.5;color:#cfc4bd">
+            <li>Ставится для текущего пользователя, без прав администратора</li>
+          </ul>
+          <a href="https://github.com/cloudmus/cloudmus/releases/latest" target="_blank" style="margin-top:auto;display:flex;justify-content:center;padding:15px 20px;border-radius:999px;background:#ff5a2b;color:#fff;font-weight:700;font-size:15px" style-hover="background:#ff6e42;color:#fff">Скачать установщик</a>
+        </div>
+
+        <div style="padding:clamp(24px,3vw,36px);border-radius:22px;background:rgba(36,29,25,.42);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <h3 style="margin:0;display:flex;align-items:center;gap:12px;font-family:Rubik,sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em"><svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" style="display:block;flex:none"><ellipse cx="12" cy="15.5" rx="8" ry="10" fill="#f3ede9"></ellipse><ellipse cx="12" cy="17.5" rx="5.2" ry="7.2" fill="#15110f"></ellipse><circle cx="9.6" cy="8.6" r="1.7" fill="#15110f"></circle><circle cx="14.4" cy="8.6" r="1.7" fill="#15110f"></circle><path d="M9.6 11.2h4.8L12 14z" fill="#15110f"></path><path d="M3.5 25.6c0-1.8 2-2.8 4.6-2.8s3.4 1.2 3.4 2.2-1 1.6-4 1.6-4-.2-4-1zM20.5 25.6c0-1.8-2-2.8-4.6-2.8s-3.4 1.2-3.4 2.2 1 1.6 4 1.6 4-.2 4-1z" fill="#f3ede9"></path></svg>Linux</h3>
+            <span style="font-size:14px;color:#9a8d85">x86_64, glibc 2.31+</span>
+          </div>
+          <div style="padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.3);font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;color:#e8ddd6;overflow-x:auto;white-space:pre"><span style="color:#7d716a">$</span> chmod +x CloudMus-*-x86_64.AppImage
+<span style="color:#7d716a">$</span> ./CloudMus-*-x86_64.AppImage</div>
+          <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.5;color:#cfc4bd">
+            <li>Debian 11, Ubuntu 20.04, Fedora 32, openSUSE Leap 15.3 и новее</li>
+          </ul>
+          <a href="https://github.com/cloudmus/cloudmus/releases/latest" target="_blank" style="margin-top:auto;display:flex;justify-content:center;padding:15px 20px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#f3ede9;font-weight:700;font-size:15px" style-hover="background:rgba(255,255,255,.14);color:#fff">Скачать AppImage</a>
+        </div>
+
+      </div>
+    </section>
+
+    <footer style="position:relative;margin-top:clamp(24px,4vw,56px);padding:clamp(170px,15vw,230px) 0 44px">
+      <div ref="{{ planetRef }}" aria-hidden="true" style="position:fixed;left:0;right:0;bottom:0;height:420px;z-index:-1;pointer-events:none;will-change:transform;transform:translate3d(0,120vh,0)">
+      <svg aria-hidden="true" viewBox="0 0 1600 420" preserveAspectRatio="xMidYMin slice" style="position:absolute;inset:0;width:100%;height:100%;display:block">
+        <defs>
+          <radialGradient id="cmAtmo" cx="800" cy="3320" r="3290" gradientUnits="userSpaceOnUse">
+            <stop offset=".965" stop-color="#ff5a2b" stop-opacity=".34"></stop>
+            <stop offset=".98" stop-color="#ff5a2b" stop-opacity=".07"></stop>
+            <stop offset="1" stop-color="#ff5a2b" stop-opacity="0"></stop>
+          </radialGradient>
+          <linearGradient id="cmGround" x1="0" y1="110" x2="0" y2="420" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#3a271f"></stop>
+            <stop offset="1" stop-color="#17110f"></stop>
+          </linearGradient>
+          <clipPath id="cmPlanet"><circle cx="800" cy="3320" r="3200"></circle></clipPath>
+        </defs>
+        <circle cx="800" cy="3320" r="3290" fill="url(#cmAtmo)"></circle>
+        <circle cx="800" cy="3320" r="3200" fill="url(#cmGround)"></circle>
+        <g clip-path="url(#cmPlanet)" fill="none" stroke="#ff7a4d">
+          <ellipse cx="800" cy="3320" rx="3200" ry="3160" stroke-opacity=".10" stroke-dasharray="2 10"></ellipse>
+          <ellipse cx="800" cy="3320" rx="3200" ry="3080" stroke-opacity=".08" stroke-dasharray="2 10"></ellipse>
+          <ellipse cx="800" cy="3320" rx="3200" ry="2990" stroke-opacity=".06" stroke-dasharray="2 10"></ellipse>
+          <ellipse cx="800" cy="3320" rx="2200" ry="3200" stroke-opacity=".06"></ellipse>
+          <ellipse cx="800" cy="3320" rx="1200" ry="3200" stroke-opacity=".06"></ellipse>
+          <ellipse cx="800" cy="3320" rx="380" ry="3200" stroke-opacity=".06"></ellipse>
+          <g stroke="#ff7a4d" stroke-opacity=".35" stroke-width="1.2" stroke-dasharray="4 5" fill="#4a3026" fill-opacity=".55">
+            <path d="M60 300C90 250 170 235 230 250C290 262 300 300 350 296C400 292 420 330 380 360C330 400 240 380 190 405C140 430 70 400 50 360C40 335 45 320 60 300Z"></path>
+            <path d="M520 175C570 150 660 150 700 170C740 190 720 225 760 240C800 255 790 300 740 310C690 320 650 290 610 300C560 312 520 290 510 255C500 222 490 192 520 175Z"></path>
+            <path d="M900 150C960 135 1060 140 1110 165C1160 190 1150 230 1110 245C1070 260 1040 240 1000 255C950 274 900 250 885 215C872 185 870 160 900 150Z"></path>
+            <path d="M1250 210C1300 190 1400 195 1460 220C1520 245 1600 270 1610 330L1610 430L1330 430C1300 400 1270 380 1250 340C1220 300 1210 230 1250 210Z"></path>
+            <path d="M820 330C850 315 900 320 905 345C910 370 870 385 840 375C815 366 800 342 820 330Z"></path>
+          </g>
+        </g>
+        <circle cx="800" cy="3320" r="3200" fill="none" stroke="#ff7a4d" stroke-opacity=".8" stroke-width="2"></circle>
+        <circle cx="800" cy="3320" r="3228" fill="none" stroke="#ff7a4d" stroke-opacity=".14" stroke-dasharray="1 9"></circle>
+        <g fill="#ffd9c8" fill-opacity=".5">
+          <circle cx="210" cy="40" r="1.2"></circle><circle cx="470" cy="18" r="1"></circle><circle cx="1120" cy="30" r="1.3"></circle><circle cx="1380" cy="70" r="1"></circle><circle cx="960" cy="12" r="1"></circle>
+        </g>
+      </svg>
+      <div ref="{{ pulseLayer }}" style="position:absolute;inset:0;overflow:hidden"></div>
+      <div style="position:absolute;left:0;right:0;top:calc(100% - 1px);height:1200px;background:#17110f"></div>
+      </div>
+      <div style="position:relative;max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,48px);display:flex;justify-content:space-between;align-items:center;gap:16px 32px;flex-wrap:wrap;font-size:14px;color:#9a8d85">
+        <div style="display:flex;align-items:center;gap:10px">
+          <img src="uploads/logo.svg" alt="" style="width:22px;height:22px;display:block">
+          <span>CloudMus · лицензия MIT · Vladislav Navrocky</span>
+        </div>
+        <div style="display:flex;gap:24px;flex-wrap:wrap">
+          <a href="https://github.com/cloudmus/cloudmus" target="_blank" style="color:#cfc4bd">GitHub</a>
+          <a href="https://github.com/cloudmus/cloudmus/blob/master/CHANGELOG.md" target="_blank" style="color:#cfc4bd">Changelog</a>
+          <a href="https://github.com/cloudmus/cloudmus/blob/master/docs/development.md" target="_blank" style="color:#cfc4bd">Для разработчиков</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;primaryOS&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;windows&quot;,&quot;linux&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;animatedBackdrop&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showRoadmap&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const CM_SH = [[[3.4,9.4,2.9],[7.2,6.6,3.8],[11.4,7.6,3],[13,10,2.4],[8.2,9.6,3]],[[3.6,9.6,2.8],[6.6,6.8,3.4],[10.6,6,3.4],[13,9.4,2.6],[8.6,9.8,2.9]],[[2.9,10.2,2.5],[6,8.2,3],[9.6,7,3.4],[13,9.6,2.6],[7.8,10.2,2.5],[11,10.4,2.4]],[[3.8,10,2.6],[6.4,8,2.8],[10,6.4,3.8],[13.2,9.8,2.4],[9,10,2.8]]], cmSvg = k => CM_SH[k % CM_SH.length].map(([x, y, r]) => '<circle cx="' + x + '" cy="' + y + '" r="' + r + '"></circle>').join('');
+class Component extends DCLogic {
+  state = { os: 'windows' };
+  heroCanvas = React.createRef();
+  heroLogo = React.createRef(); featCanvas = React.createRef(); bgLayer = React.createRef(); navBg = React.createRef(); planetRef = React.createRef(); pulseLayer = React.createRef(); orbLayer = React.createRef(); lgCloud = React.createRef(); lgRing1 = React.createRef(); lgRing2 = React.createRef(); lgCore = React.createRef();
+  componentDidMount() {
+    if (/Linux|X11/.test(navigator.userAgent) && !/Android/.test(navigator.userAgent)) this.setState({ os: 'linux' });
+    this.startHero();
+    this.startClouds();
+    const IN = 'max(clamp(16px,4vw,48px),calc((100% - 1200px) / 2))';
+    let full = null;
+    this.onNavScroll = () => {
+      const f = scrollY > 8, b = this.navBg.current;
+      if (!b || f === full) return; full = f;
+      b.style.top = b.style.bottom = f ? '0px' : '14px';
+      b.style.left = b.style.right = f ? '0px' : IN;
+      b.style.borderRadius = f ? '0px' : '16px';
+      b.style.borderColor = f ? 'transparent transparent rgba(255,255,255,.08)' : 'rgba(255,255,255,.08)';
+      b.style.background = f ? 'rgba(24,19,17,.62)' : 'rgba(30,24,21,.55)';
+    };
+    addEventListener('scroll', this.onNavScroll, { passive: true });
+    let fh = 0, maxS = 0;
+    const planetMeasure = () => {
+      const p = this.planetRef.current; if (!p) return;
+      const f = p.parentElement; fh = f.offsetHeight; p.style.height = fh + 'px';
+      maxS = document.documentElement.scrollHeight - innerHeight;
+    };
+    const planetUpd = () => {
+      const p = this.planetRef.current; if (!p) return;
+      const rem = Math.max(0, p.parentElement.getBoundingClientRect().bottom - innerHeight), off = rem * 0.2;
+      if (off > innerHeight) { if (p.style.visibility !== 'hidden') p.style.visibility = 'hidden'; return; }
+      p.style.visibility = 'visible';
+      p.style.transform = 'translate3d(0,' + off.toFixed(2) + 'px,0)';
+    };
+    let orbs = null;
+    const orbUpd = () => {
+      const L = this.orbLayer.current; if (!L) return;
+      if (!orbs) orbs = [...L.children].map(el => [el, +el.dataset.k || 0]);
+      const y = scrollY;
+      for (const [el, k] of orbs) el.style.transform = 'translate3d(0,' + (y * k).toFixed(1) + 'px,0)';
+    };
+    this.onPlanetScroll = () => { planetUpd(); orbUpd(); };
+    orbUpd();
+    this.onPlanetResize = () => { planetMeasure(); planetUpd(); };
+    this.planetRO = new ResizeObserver(this.onPlanetResize); this.planetRO.observe(document.body);
+    addEventListener('scroll', this.onPlanetScroll, { passive: true });
+    addEventListener('resize', this.onPlanetResize);
+    this.onPlanetResize();
+    const contPaths = ["M60 300C90 250 170 235 230 250C290 262 300 300 350 296C400 292 420 330 380 360C330 400 240 380 190 405C140 430 70 400 50 360C40 335 45 320 60 300Z","M520 175C570 150 660 150 700 170C740 190 720 225 760 240C800 255 790 300 740 310C690 320 650 290 610 300C560 312 520 290 510 255C500 222 490 192 520 175Z","M900 150C960 135 1060 140 1110 165C1160 190 1150 230 1110 245C1070 260 1040 240 1000 255C950 274 900 250 885 215C872 185 870 160 900 150Z","M1250 210C1300 190 1400 195 1460 220C1520 245 1600 270 1610 330L1610 430L1330 430C1300 400 1270 380 1250 340C1220 300 1210 230 1250 210Z","M820 330C850 315 900 320 905 345C910 370 870 385 840 375C815 366 800 342 820 330Z"].map(d => new Path2D(d)), hitCtx = document.createElement('canvas').getContext('2d');
+    const spawnPulse = () => {
+      const L = this.pulseLayer.current, P = this.planetRef.current;
+      this.pulseT = setTimeout(spawnPulse, 500 + Math.random() * 1300);
+      if (!L || !P || P.style.visibility === 'hidden' || document.hidden) return;
+      const W = P.offsetWidth, H = P.offsetHeight, k = Math.max(W / 1600, H / 420), ox = (W - 1600 * k) / 2;
+      const ft = P.parentElement.lastElementChild, pr = P.getBoundingClientRect(), boxes = ft ? [...ft.querySelectorAll('a, span, img')].map(el => { const b = el.getBoundingClientRect(); return [b.left - pr.left - 40, b.top - pr.top - 26, b.right - pr.left + 40, b.bottom - pr.top + 26]; }) : [];
+      let px = -1, py = -1, vy = 0;
+      for (let t = 0; t < 30; t++) {
+        const vx = Math.random() * 1600; vy = 120 + Math.random() * 300;
+        if ((vx - 800) ** 2 + (vy - 3320) ** 2 > 3185 ** 2) continue;
+        if (!contPaths.some(p => hitCtx.isPointInPath(p, vx, vy))) continue;
+        const sx = vx * k + ox, sy = vy * k;
+        if (sx < 24 || sx > W - 24 || sy > H - 10 || boxes.some(b => sx > b[0] && sx < b[2] && sy > b[1] && sy < b[3])) continue;
+        px = sx; py = sy; break;
+      }
+      if (px < 0) return;
+      const s = (0.85 + (vy - 120) / 300 * 0.6) * Math.min(1.3, Math.max(.75, k)), g = document.createElement('div');
+      g.style.cssText = 'position:absolute;left:' + px.toFixed(1) + 'px;top:' + py.toFixed(1) + 'px;width:0;height:0';
+      const dot = document.createElement('div');
+      dot.style.cssText = 'position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:#ffc2a8;box-shadow:0 0 16px 6px rgba(255,90,43,.85)';
+      g.appendChild(dot);
+      dot.animate([{ opacity: 0, transform: 'scale(.4)' }, { opacity: 1, transform: 'scale(' + s + ')', offset: .15 }, { opacity: 0, transform: 'scale(' + s * .6 + ')' }], { duration: 3000, easing: 'ease-out', fill: 'forwards' });
+      for (let q = 0; q < 3; q++) {
+        const r = document.createElement('div');
+        r.style.cssText = 'position:absolute;left:-80px;top:-80px;width:160px;height:160px;border-radius:50%;border:2px solid rgba(255,122,77,.9);opacity:0';
+        g.appendChild(r);
+        r.animate([{ opacity: .9, transform: 'scale(.04,.015)' }, { opacity: 0, transform: 'scale(' + (1.5 * s) + ',' + (0.45 * s) + ')' }], { duration: 2800, delay: q * 450, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'forwards' });
+      }
+      L.appendChild(g);
+      setTimeout(() => g.remove(), 4400);
+    };
+    spawnPulse();
+    this.onNavScroll();
+  }
+  componentWillUnmount() { clearTimeout(this.pulseT); removeEventListener('scroll', this.onNavScroll); removeEventListener('scroll', this.onPlanetScroll); removeEventListener('resize', this.onPlanetResize); this.planetRO && this.planetRO.disconnect(); cancelAnimationFrame(this.raf); cancelAnimationFrame(this.cloudRaf); this.ro && this.ro.disconnect(); window.removeEventListener('mousemove', this.onCloudMove); window.removeEventListener('mousemove', this.onHeroMove); }
+  cloudGridRef = React.createRef();
+  startClouds() {
+    const mouse = { x: -1e4, y: -1e4 };
+    this.onCloudMove = e => { mouse.x = e.clientX; mouse.y = e.clientY; };
+    window.addEventListener('mousemove', this.onCloudMove, { passive: true });
+    document.addEventListener('mouseleave', () => { mouse.x = mouse.y = -1e4; });
+    const rnd = i => { const s = Math.sin(i * 12.9898 + 4.1) * 43758.5453; return s - Math.floor(s); };
+    const st = [], lay = { W: 0, n: 0, p: [] };
+    const tick = () => {
+      const grid = this.cloudGridRef.current;
+      if (grid) {
+        const els = grid.querySelectorAll('[data-cloud]');
+        const gr = grid.getBoundingClientRect(), W = grid.clientWidth, n = els.length;
+        const near = mouse.x > gr.left - 320 && mouse.x < gr.right + 320 && mouse.y > gr.top - 320 && mouse.y < gr.bottom + 320;
+        const laid = W === lay.W && n === lay.n && lay.done;
+        if (laid && (gr.bottom < -200 || gr.top > innerHeight + 200 || (!near && lay.idle))) { this.cloudRaf = requestAnimationFrame(tick); return; }
+        if (!lay.ch || W !== lay.W) lay.ch = els[0] ? els[0].offsetHeight : 190;
+        if (n && (W !== lay.W || n !== lay.n)) {
+          lay.W = W; lay.n = n; lay.p = [];
+          const cw = 300, ch = 200;
+          if (W < 640) {
+            els.forEach((el, i) => lay.p.push([W / 2 - cw / 2 + (rnd(i) - .5) * Math.min(60, W - cw), i * (ch - 20)]));
+            grid.style.height = (n * (ch - 20) + 20) + 'px';
+          } else {
+            const AO = W / 2;
+            let BO = Math.max(ch, AO * 0.9);
+            const sc = Math.max(0.85, Math.min(1, Math.sqrt(Math.PI * AO * BO / (n * cw * ch * 1.4))));
+            BO = Math.max(BO, n * cw * ch * sc * sc * 1.4 / (Math.PI * AO));
+            lay.sc = sc;
+            const SX = (cw + 10) * sc, SY = (ch - 10) * sc, A = AO - cw * sc / 2, B = BO - ch * sc / 2, GA = Math.PI * (3 - Math.sqrt(5));
+            const pts = [];
+            for (let i = 0; i < n; i++) { const r = Math.sqrt((i + .5) / n) * .92, t = i * GA + 0.4 + (rnd(i) - .5) * .5; pts.push([Math.cos(t) * r * A, Math.sin(t) * r * B]); }
+            for (let it = 0; it < 1500; it++) {
+              let moved = false;
+              for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+                const P = pts[i], Q = pts[j], dx = Q[0] - P[0], dy = Q[1] - P[1], ox = SX - Math.abs(dx), oy = SY - Math.abs(dy);
+                if (ox > 0.5 && oy > 0.5) {
+                  moved = true;
+                  if (ox / SX < oy / SY) { const m = ox * .5 * (dx < 0 ? -1 : 1); P[0] -= m; Q[0] += m; }
+                  else { const m = oy * .5 * (dy < 0 ? -1 : 1); P[1] -= m; Q[1] += m; }
+                }
+              }
+              if (it % 3 === 0) for (const P of pts) { const k = Math.hypot(P[0] / A, P[1] / B); if (k > 1) { const f = 1 - (1 - 1 / k) * .5; P[0] *= f; P[1] *= f; } }
+              if (!moved) break;
+            }
+            let minY = Infinity, maxY = -Infinity;
+            pts.forEach(P => { minY = Math.min(minY, P[1]); maxY = Math.max(maxY, P[1]); });
+            pts.forEach(P => lay.p.push([W / 2 + P[0] - cw / 2, P[1] - minY - ch * (1 - sc) / 2]));
+            grid.style.height = (maxY - minY + ch * sc + 20) + 'px';
+          }
+        }
+        let moving = false;
+        els.forEach((el, i) => {
+          if (!st[i]) {
+            st[i] = { rot: (rnd(i + 99) - .5) * 6, sc: .97 + rnd(i + 21) * .06, x: 0, y: 0 };
+            const sh = el.querySelector('[data-cloud-shape]');
+            if (sh) { sh.firstChild.innerHTML = cmSvg(i + 1); if (rnd(i + 7) > .5) sh.style.transform = 'scaleX(-1)'; if (rnd(i + 13) < .35) { sh.firstChild.setAttribute('fill', 'rgb(255,140,95)'); sh.firstChild.setAttribute('opacity', '.22'); } }
+          }
+          const s = st[i], p = lay.p[i] || [0, 0];
+          const cx = gr.left + p[0] + 150, cy = gr.top + p[1] + 100;
+          const dx = cx - mouse.x, dy = cy - mouse.y, d = Math.hypot(dx, dy) || 1;
+          const R = 300, f = d < R ? Math.pow(1 - d / R, 2) * 40 : 0;
+          s.x += ((dx / d) * f - s.x) * .1; s.y += ((dy / d) * f - s.y) * .1;
+          if (Math.abs(s.x) > .3 || Math.abs(s.y) > .3) moving = true;
+          el.style.transform = 'translate(' + (p[0] + s.x).toFixed(1) + 'px,' + (p[1] + s.y).toFixed(1) + 'px) rotate(' + s.rot.toFixed(2) + 'deg) scale(' + (s.sc * (lay.sc || 1)).toFixed(3) + ')';
+        });
+        lay.idle = !moving && !near; lay.done = n > 0 && W > 0;
+      }
+      this.cloudRaf = requestAnimationFrame(tick);
+    };
+    tick();
+  }
+  startHero() {
+    const cv = this.heroCanvas.current, logo = this.heroLogo.current;
+    if (!cv || !logo) return;
+    const mkSprite = (col, k) => { const c = document.createElement('canvas'); c.width = 346; c.height = 244; const x = c.getContext('2d'); x.scale(20, 20); x.translate(0.7, -1.6); x.fillStyle = col; CM_SH[k].forEach(([cx, cy, r]) => { x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.fill(); }); return c; };
+    const spW = CM_SH.map((_, k) => mkSprite('rgb(255,240,232)', k)), spO = CM_SH.map((_, k) => mkSprite('rgb(255,140,95)', k));
+    const spWd = CM_SH.map((_, k) => mkSprite('rgb(120,104,98)', k)), spOd = CM_SH.map((_, k) => mkSprite('rgb(140,72,52)', k)), urlsD = [spWd.map(c => c.toDataURL()), spOd.map(c => c.toDataURL())];
+    const CW = 160, CH = 113, SVGNS = 'http://www.w3.org/2000/svg';
+    const shape = '<circle cx="3.4" cy="9.4" r="2.9"></circle><circle cx="7.2" cy="6.6" r="3.8"></circle><circle cx="11.4" cy="7.6" r="3"></circle><circle cx="13" cy="10" r="2.4"></circle><circle cx="8.2" cy="9.6" r="3"></circle>';
+    cv.innerHTML = '';
+    const glow = document.createElement('div');
+    glow.style.cssText = 'position:absolute;left:50%;top:50%;width:600px;height:600px;margin:-300px 0 0 -300px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,110,60,.7),rgba(255,90,43,.25) 45%,rgba(255,90,43,0));will-change:transform,opacity';
+    cv.appendChild(glow);
+    const pool = [];
+    const urls = [spW.map(c => c.toDataURL()), spO.map(c => c.toDataURL())];
+    for (let i = 0; i < 28; i++) {
+      const el = document.createElement('div');
+      el.style.cssText = 'position:absolute;left:0;top:0;width:' + CW + 'px;height:' + CH + 'px;margin:' + (-CH / 2) + 'px 0 0 ' + (-CW / 2) + 'px;will-change:transform,opacity;opacity:0';
+      const im = new Image(); im.src = urls[i % 3 === 0 ? 1 : 0][i % 4]; im.width = CW; im.height = CH; im.decoding = 'async'; im.style.display = 'block'; el.appendChild(im);
+      cv.appendChild(el); pool.push({ el, warm: i % 3 === 0, used: false, vis: false });
+    }
+    let dpr = 1, W = 0, H = 0;
+    const resize = () => { W = cv.clientWidth; H = cv.clientHeight; };
+    resize();
+    this.ro = new ResizeObserver(resize); this.ro.observe(cv);
+    const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const clouds = [], ZF = 14, ZN = 0.35; let zc = 100000;
+    const spawn = (z0) => {
+      const a = Math.random() * Math.PI * 2, r = 0.9 + Math.random() * 2.6;
+      const p = pool.find(q => !q.used); if (!p) return; p.used = true; p.el.style.zIndex = String(--zc);
+      clouds.push({ p, x: Math.cos(a) * r * 1.5, y: Math.sin(a) * r * 0.85, z: z0 ?? ZF, s: 0.6 + Math.random() * 0.8, rot: (Math.random() - .5) * 14, flip: Math.random() < .5 ? -1 : 1 });
+    };
+    for (let i = 0; i < 22; i++) spawn(ZN + 0.5 + Math.random() * (ZF - ZN - 0.5));
+    const ms = { x: 0, y: 0, tx: 0, ty: 0 };
+    this.onHeroMove = e => { ms.tx = e.clientX / innerWidth - .5; ms.ty = e.clientY / innerHeight - .5; };
+    window.addEventListener('mousemove', this.onHeroMove, { passive: true });
+    const layers = [[this.lgCloud, .035, .16, .74], [this.lgRing1, .07, .2, .7], [this.lgRing2, .11, .26, .64], [this.lgCore, .17, .34, .58]].map(([r, amp, k, d]) => ({ r, amp, k, d, x: 0, v: 0 }));
+    let bpm = 112, beatLen = 60000 / bpm, nextBeat = performance.now() + 300, beatN = 0;
+    let env = 0, speed = 1, last = performance.now(), spawnAcc = 0;
+    const hit = (strength) => { env = Math.max(env, strength); };
+    const tick = (now) => {
+      this.raf = requestAnimationFrame(tick);
+      const dt = Math.min(50, now - last); last = now;
+      if (document.hidden) return;
+      this.fr = (this.fr || 0) + 1;
+      const on = (this.props.animatedBackdrop ?? true) && !reduce;
+      if (on && now >= nextBeat) {
+        beatN++;
+        const bar = beatN % 4;
+        if (Math.random() > 0.08) hit(bar === 1 ? 1 : 0.55 + Math.random() * 0.3);
+        if (Math.random() < 0.18) setTimeout(() => hit(0.35 + Math.random() * 0.35), beatLen * (Math.random() < .5 ? 0.5 : 0.75));
+        if (beatN % 32 === 0) { bpm = 96 + Math.random() * 40; beatLen = 60000 / bpm; }
+        nextBeat += beatLen * (1 + (Math.random() - .5) * 0.04);
+        if (now - nextBeat > 1000) nextBeat = now + beatLen;
+      }
+      env *= Math.pow(0.0035, dt / 1000);
+      const target = on ? 1.6 : 0.15;
+      speed += (target - speed) * Math.min(1, dt / 90);
+      const heroVis = cv.getBoundingClientRect().bottom > 0;
+      const cx = W / 2, cy = H / 2;
+      if (heroVis) {
+      const gs = (160 + env * 140) / 300;
+      glow.style.transform = 'scale(' + gs.toFixed(3) + ')'; glow.style.opacity = (0.45 + env * 0.55).toFixed(3);
+      spawnAcc += dt * speed * 0.0035;
+      while (spawnAcc > 1 && clouds.length < 28) { spawn(); spawnAcc -= 1; }
+      const fl = Math.min(W, H * 1.6) * 0.55, camX = ms.x * 0.9, camY = ms.y * 0.6;
+      for (let i = clouds.length - 1; i >= 0; i--) {
+        const c = clouds[i];
+        c.z -= speed * dt * 0.0011;
+        if (c.z < ZN) { c.p.used = false; c.p.el.style.opacity = '0'; c.p.vis = false; clouds.splice(i, 1); }
+      }
+      for (const c of clouds) {
+        const k = fl / c.z;
+        const x = cx + (c.x - camX) * k, y = cy + (c.y - camY) * k;
+        const sc = c.s * k * 0.09;
+        const ext = sc * 9, ex = Math.min(x - ext, W - x - ext) / (W * .22), ey = Math.min(y - ext * .6, H - y - ext * .6) / (H * .22), vg = Math.max(0, Math.min(1, ex, ey));
+        const alpha = Math.min(1, (ZF - c.z) / 4) * Math.min(1, (c.z - ZN) / 1.2) * 0.16 * vg * (c.p.warm ? 1.35 : 0.8);
+        const st = c.p.el.style;
+        if (alpha <= 0.003) { if (c.p.vis) { st.opacity = '0'; c.p.vis = false; } continue; }
+        const f = sc * 17.3 / CW, big = f * CW / W; if (big > 1.3) { if (c.p.vis) { st.opacity = '0'; c.p.vis = false; } continue; }
+        st.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) rotate(' + c.rot.toFixed(1) + 'deg) scale(' + (f * c.flip).toFixed(3) + ',' + f.toFixed(3) + ')';
+        st.opacity = (alpha * Math.min(1, (1.3 - big) / 0.5)).toFixed(3); c.p.vis = true;
+      }
+      }
+      ms.x += (ms.tx - ms.x) * Math.min(1, dt / 220); ms.y += (ms.ty - ms.y) * Math.min(1, dt / 220);
+      if (heroVis) layers.forEach(L => { const w = 2 * Math.PI * (5 + L.k * 12), z = 0.32, n = Math.ceil(dt / 4), st = dt / n / 1000; for (let j = 0; j < n; j++) { L.v += ((env - L.x) * w * w - 2 * z * w * L.v) * st; L.x += L.v * st; } if (!isFinite(L.x)) { L.x = 0; L.v = 0; } L.x = Math.max(-.5, Math.min(1.5, L.x)); if (L.r.current) L.r.current.style.transform = 'scale(' + (1 + L.x * L.amp).toFixed(4) + ')'; });
+      const fc = this.featCanvas.current;
+      if (fc) {
+        const rr = fc.getBoundingClientRect();
+        if (rr.bottom > 0 && rr.top < innerHeight && (fc.width !== Math.round(fc.clientWidth) || fc.height !== Math.round(fc.clientHeight) || !this.fcDrawn)) { this.fcDrawn = true;
+          const fw = fc.clientWidth, fh = fc.clientHeight;
+          if (fc.width !== Math.round(fw * dpr) || fc.height !== Math.round(fh * dpr)) { fc.width = Math.round(fw * dpr); fc.height = Math.round(fh * dpr); }
+          const fx = fc.getContext('2d');
+          fx.setTransform(dpr, 0, 0, dpr, 0, 0); fx.clearRect(0, 0, fw, fh);
+          const gx = fw / 2, gy = fh / 2, grr = Math.max(fw, fh) * .42 * (1 + env * .06);
+          const gg = fx.createRadialGradient(gx, gy, 0, gx, gy, grr);
+          gg.addColorStop(0, 'rgba(255,100,55,0.16)'); gg.addColorStop(.5, 'rgba(160,60,110,0.07)'); gg.addColorStop(1, 'rgba(255,90,43,0)');
+          fx.fillStyle = gg; fx.fillRect(0, 0, fw, fh);
+
+        }
+      }
+      const bl = this.bgLayer.current;
+      if (bl && fc) {
+        if (!this.bgl) {
+          this.bgl = [];
+          for (let i = 0; i < 18; i++) {
+            const z = .2 + Math.random() * .8, warm = Math.random() < .3, w = Math.round(80 + z * 200);
+            const im = new Image(); im.src = urlsD[warm ? 1 : 0][i % 4]; im.width = w; im.height = Math.round(w * 12.2 / 17.3); im.decoding = 'async';
+            im.style.cssText = 'position:absolute;left:0;top:0;display:block;opacity:0.001;will-change:transform,opacity';
+            bl.appendChild(im); this.bgl.push({ im, z, w, fl: Math.random() < .5 ? ' scaleX(-1)' : '', op: warm ? 0.12 + z * 0.16 : 0.08 + z * 0.12, x: Math.random() * 1.1 - .1, y: Math.random() });
+          }
+          this.bgl.sort((p, q) => p.z - q.z).forEach(c => bl.appendChild(c.im));
+        }
+        const br = bl.getBoundingClientRect();
+        if (br.bottom > 0 && br.top < innerHeight) {
+          const bw = bl.clientWidth, bh = bl.clientHeight, sy = (br.top + bh / 2 - innerHeight / 2);
+          for (const c of this.bgl) {
+            if (c.dir === undefined) { c.dir = Math.random() < .5 ? -1 : 1; c.vy = (Math.random() - .5) * .3; c.x = Math.random() * 1.6 - .3; }
+            c.x += c.dir * dt * 0.000026 * (0.3 + c.z) * (on ? 1 : 0.3);
+            c.y += c.vy * dt * 0.000004;
+            if (c.x > 1.3 || c.x < -0.3) { c.x = c.dir > 0 ? -0.3 : 1.3; c.y = Math.random(); }
+            if (c.y > 1.1) c.y = -0.1; else if (c.y < -0.1) c.y = 1.1;
+            const px = c.x * bw, py = c.y * bh - c.w * .35 + sy * (c.z - .5) * 0.9, sxc = br.left + px + c.w / 2, syc = br.top + py + c.w * .35, fz = innerWidth * .25;
+            const sm = v => { v = Math.max(0, Math.min(1, v)); return v * v * (3 - 2 * v); };
+            const fe = sm(Math.min(c.x + 0.3, 1.3 - c.x) / 0.45) * sm(Math.min(sxc, innerWidth - sxc) / fz) * sm(Math.min(syc - br.top, br.bottom - syc) / (bh * .18));
+            c.im.style.transform = 'translate3d(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px,0)' + c.fl;
+            c.im.style.opacity = Math.max(0.001, c.op * fe).toFixed(4);
+          }
+        }
+      }
+      if (heroVis) logo.style.transform = 'translate(' + (ms.x * 14).toFixed(1) + 'px,' + (ms.y * 10).toFixed(1) + 'px)';
+      
+    };
+    this.raf = requestAnimationFrame(tick);
+  }
+  renderVals() {
+    const h = React.createElement;
+    const pref = this.props.primaryOS ?? 'auto';
+    const os = pref === 'auto' ? this.state.os : pref;
+    const anim = false;
+    const orb = ({ 'data-k': k, ...style }) => h('div', { 'data-k': k, style: { position: 'absolute', borderRadius: '50%', willChange: 'transform', ...style, background: 'radial-gradient(closest-side,' + style.background + ',transparent)' } });
+    const backdrop = h('div', { ref: this.orbLayer, style: { position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' } },
+      orb({ 'data-k': .55, width: '55vw', height: '55vw', left: '-15vw', top: '-10vw', background: 'rgba(255,90,43,.28)' }),
+      orb({ 'data-k': .25, width: '45vw', height: '45vw', right: '-12vw', top: '20vh', background: 'rgba(150,60,110,.22)' }),
+      orb({ 'data-k': .4, width: '40vw', height: '40vw', left: '30vw', top: '140vh', background: 'rgba(255,140,60,.14)' }),
+      orb({ 'data-k': .15, width: '50vw', height: '50vw', left: '-18vw', top: '230vh', background: 'rgba(150,60,110,.18)' }),
+      orb({ 'data-k': .5, width: '42vw', height: '42vw', right: '-10vw', top: '300vh', background: 'rgba(255,90,43,.18)' }),
+      orb({ 'data-k': .3, width: '38vw', height: '38vw', left: '35vw', top: '400vh', background: 'rgba(255,140,60,.12)' })
+    );
+    const eq = [0, 1, 2, 3].map(i => h('span', { key: i, style: { width: 3, height: 14, borderRadius: 2, background: '#ff5a2b', transformOrigin: 'bottom', animation: 'cmEq ' + (0.8 + i * 0.17) + 's ease-in-out ' + (i * 0.12) + 's infinite' } }));
+    const svg = (kids) => h('svg', { width: 20, height: 20, viewBox: '0 0 24 24', fill: 'currentColor', 'aria-hidden': true, style: { display: 'block', flex: 'none' } }, ...kids);
+    const winIcon = svg([h('path', { key: 1, d: 'M2 4.5 10.2 3.4v8.1H2zM11.2 3.2 22 1.8v9.7H11.2zM2 12.5h8.2v8.1L2 19.5zM11.2 12.5H22v9.7l-10.8-1.4z' })]);
+    const tuxIcon = svg([
+      h('path', { key: 1, fillRule: 'evenodd', d: 'M12 1.5c-2.7 0-4.4 2.2-4.4 5.2 0 1.7-.5 2.7-1.4 4C5 12.4 3.8 14.4 3.8 16.8c0 .9.2 1.7.5 2.4l-1.5.9c-.6.4-.5 1.3.2 1.5l3.6 1.1c.6.2 1.2-.1 1.4-.6.9.4 2.2.7 4 .7s3.1-.3 4-.7c.2.5.8.8 1.4.6l3.6-1.1c.7-.2.8-1.1.2-1.5l-1.5-.9c.3-.7.5-1.5.5-2.4 0-2.4-1.2-4.4-2.4-6.1-.9-1.3-1.4-2.3-1.4-4 0-3-1.7-5.2-4.4-5.2zM12 10.6c-2.3 0-4.4 2.6-4.4 6 0 2.4 1.9 3.6 4.4 3.6s4.4-1.2 4.4-3.6c0-3.4-2.1-6-4.4-6zM10.2 5.2a.9 1.2 0 1 0 0 2.4.9 1.2 0 1 0 0-2.4zm3.6 0a.9 1.2 0 1 0 0 2.4.9 1.2 0 1 0 0-2.4zM12 8.1c-.9 0-1.8.4-1.8.9s.9 1.2 1.8 1.2 1.8-.7 1.8-1.2-.9-.9-1.8-.9z' })
+    ]);
+    return {
+      primaryIcon: os === 'linux' ? tuxIcon : winIcon,
+      secondaryIcon: os === 'linux' ? winIcon : tuxIcon,
+      heroFeatures: ['Яндекс Музыка, YouTube Music и локальная папка', 'Общая очередь и история', 'Загрузка треков', 'Медиаклавиши и трей', 'Красивый интерфейс'],
+      backdrop, eq, cloudGridRef: this.cloudGridRef, heroCanvas: this.heroCanvas, heroLogo: this.heroLogo, featCanvas: this.featCanvas, bgLayer: this.bgLayer, navBg: this.navBg, planetRef: this.planetRef, pulseLayer: this.pulseLayer, lgCloud: this.lgCloud, lgRing1: this.lgRing1, lgRing2: this.lgRing2, lgCore: this.lgCore,
+      primaryLabel: os === 'linux' ? 'Linux' : 'Windows',
+      secondaryLabel: os === 'linux' ? 'Windows' : 'Linux',
+      showSoon: this.props.showRoadmap ?? true,
+      services: [
+        { name: 'Яндекс Музыка', icon: 'logos/yandex-music.svg', tag: '', rows: [{ k: 'Подборки', v: 'Моя волна, Мне нравится, Плейлист дня, Премьера, Дежавю' }, { k: 'Библиотека', v: 'Ваши плейлисты и лайки' }, { k: 'Вход', v: 'Через аккаунт Яндекса' }] },
+        { name: 'YouTube Music', icon: 'logos/youtube-music.svg', tag: '', rows: [{ k: 'Подборки', v: 'Понравившиеся, My Supermix' }, { k: 'Библиотека', v: 'Плейлисты аккаунта' }, { k: 'Вход', v: 'Через аккаунт Google' }] },
+        { name: 'Локальная папка', folder: true, tag: '', rows: [{ k: 'Источник', v: 'Любая папка на диске' }, { k: 'Плейлисты', v: 'Вложенные папки и M3U' }, { k: 'Теги', v: 'Обложки и метаданные из файлов' }] }
+      ].map(s => ({ ...s, iconEl: s.icon ? React.createElement('img', { src: s.icon, alt: '', style: { width: 28, height: 28, display: 'block' } }) : null })),
+      soon: [['SoundCloud', 'logo-soundcloud'], ['VK Музыка', 'logo-vk-music'], ['Spotify', 'logo-spotify'], ['Deezer', 'logo-deezer'], ['Bandcamp', 'logo-bandcamp'], ['Apple Music', 'logo-apple-music'], ['TuneIn', 'logo-tunein']].map(([name]) => ({ name, slot: '', text: true })),
+      features: [
+        { n: '01', t: 'Красивый интерфейс', d: 'Большие обложки, фон окна в цвет текущего трека, эффект матового стекла.' },
+        { n: '02', t: 'Общая очередь', d: 'Треки из разных источников в одной очереди.' },
+        { n: '03', t: 'История', d: 'Список прослушанных треков по всем источникам.' },
+        { n: '04', t: 'Медиа интеграция с системой', d: 'SMTC на Windows, MPRIS на Linux.' },
+        { n: '05', t: 'Глобальные горячие клавиши', d: 'Windows, KDE Plasma, GNOME 48+, X11.' },
+        { n: '06', t: 'Лайки и дизлайки', d: 'Синхронизируются с аккаунтом сервиса.' },
+        { n: '07', t: 'Загрузка треков', d: 'Сохранение в локальную папку.' },
+        { n: '08', t: 'Трей и уведомления', d: 'Работа в фоне, уведомление о текущем треке.' },
+        { n: '09', t: 'C++ и Qt', d: 'Нативное приложение.' },
+        { n: '10', t: 'Автоматические обновления', d: 'Новые версии устанавливаются из приложения.' },
+        { n: '11', t: 'Тихий режим', d: 'Для игр и созвонов.' },
+        { n: '12', t: 'Прокси для каждого источника', d: 'Отдельный прокси для каждого сервиса.' },
+        { n: '13', t: 'Мультиязычность', d: 'Интерфейс на нескольких языках.' },
+        { n: '14', t: 'Светлая и тёмная темы', d: 'Переключение в настройках.' },
+        { n: '15', t: 'Предзагрузка', d: 'Следующий трек загружается заранее и играет без задержки.' },
+        { n: '16', t: 'Продолжение после перезапуска', d: 'Воспроизведение возобновляется с того же места.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
