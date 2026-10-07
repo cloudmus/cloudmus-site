@@ -10,7 +10,6 @@ a:hover{color:#ffa07f}
 @keyframes cmDrift1{0%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,6vh) scale(1.15)}100%{transform:translate(0,0) scale(1)}}
 @keyframes cmDrift2{0%{transform:translate(0,0) scale(1.1)}50%{transform:translate(-10vw,-4vh) scale(.9)}100%{transform:translate(0,0) scale(1.1)}}
 @keyframes cmDrift3{0%{transform:translate(0,0)}50%{transform:translate(4vw,-8vh)}100%{transform:translate(0,0)}}
-@keyframes cmEq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
 .btn-primary:hover{background:#ff6e42!important;color:#fff!important}
 .btn-secondary:hover{background:rgba(255,255,255,.12)!important;color:#fff!important}
 .btn-ghost:hover{background:rgba(255,255,255,.14)!important;color:#fff!important}

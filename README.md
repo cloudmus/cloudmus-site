@@ -2,7 +2,7 @@
 
 Landing page for [CloudMus](https://github.com/cloudmus/cloudmus), a desktop music player (Yandex Music, YouTube Music, local folders). Hosted on GitHub Pages. The page copy is in Russian.
 
-Plain static HTML, CSS and vanilla JS. No build step, no framework, and nothing is loaded from external hosts: fonts and images are in the repository.
+Plain static HTML, CSS and vanilla JS. No build step, no framework. Fonts and images are in the repository; the only runtime request is to the GitHub API for the latest release (see below).
 
 ## Structure
 
@@ -15,6 +15,15 @@ assets/img/             logo and app screenshot
 assets/img/services/    service logos
 .nojekyll               tells GitHub Pages to serve files as-is
 ```
+
+## Release data
+
+On load, `assets/js/main.js` (`loadRelease`) calls `https://api.github.com/repos/cloudmus/cloudmus/releases/latest` and:
+
+- points every download link (`a[data-asset="windows|linux"]`, in the hero and in the download cards) at the release's `*-Setup.exe` / `*.AppImage` asset,
+- replaces the placeholder file names (`[data-release-file]`) and shows version and size (`[data-release-meta]`).
+
+The result is cached in `localStorage` for 10 minutes (the unauthenticated API limit is 60 requests per hour per IP). If the request fails, the static fallbacks stay: links go to `/releases/latest` and file names are generic.
 
 ## Preview locally
 

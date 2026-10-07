@@ -6,8 +6,47 @@ const swapDownloadButtons = () => {
   const a = document.getElementById('cta-primary'), b = document.getElementById('cta-secondary');
   if (!a || !b) return;
   [a.innerHTML, b.innerHTML] = [b.innerHTML, a.innerHTML];
-  [a.href, b.href] = [b.href, a.href];
-  a.target = '_blank'; b.removeAttribute('target');
+  [a.dataset.asset, b.dataset.asset] = [b.dataset.asset, a.dataset.asset];
+};
+
+// Latest release: direct download links, real file names, version and size.
+// The page works without this (static fallbacks point at /releases/latest).
+const RELEASE_API = 'https://api.github.com/repos/cloudmus/cloudmus/releases/latest';
+const RELEASE_CACHE_KEY = 'cloudmus.release', RELEASE_TTL = 10 * 60 * 1000;
+const ASSET_PATTERNS = { windows: /-Setup\.exe$/i, linux: /\.AppImage$/i };
+
+const readReleaseCache = () => {
+  try { return JSON.parse(localStorage.getItem(RELEASE_CACHE_KEY)); } catch { return null; }
+};
+const fetchRelease = async () => {
+  const cached = readReleaseCache();
+  if (cached && Date.now() - cached.at < RELEASE_TTL) return cached.release;
+  try {
+    const res = await fetch(RELEASE_API, { headers: { Accept: 'application/vnd.github+json' } });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const r = await res.json();
+    const release = { tag: String(r.tag_name || '').replace(/^v/, ''), assets: {} };
+    for (const [os, re] of Object.entries(ASSET_PATTERNS)) {
+      const a = (r.assets || []).find(x => re.test(x.name));
+      if (a && String(a.browser_download_url).startsWith('https://github.com/')) release.assets[os] = { name: a.name, url: a.browser_download_url, size: a.size };
+    }
+    try { localStorage.setItem(RELEASE_CACHE_KEY, JSON.stringify({ at: Date.now(), release })); } catch {}
+    return release;
+  } catch {
+    return cached ? cached.release : null;
+  }
+};
+const loadRelease = async () => {
+  const release = await fetchRelease();
+  if (!release) return;
+  const mb = new Intl.NumberFormat('ru');
+  for (const [os, a] of Object.entries(release.assets)) {
+    document.querySelectorAll('a[data-asset="' + os + '"]').forEach(el => { el.href = a.url; el.removeAttribute('target'); });
+    document.querySelectorAll('[data-release-file="' + os + '"]').forEach(el => { el.textContent = a.name; });
+    document.querySelectorAll('[data-release-meta="' + os + '"]').forEach(el => {
+      el.textContent = ' · ' + [release.tag, a.size ? mb.format(Math.round(a.size / 1048576)) + ' МБ' : ''].filter(Boolean).join(' · ');
+    });
+  }
 };
 
 class Landing {
@@ -31,6 +70,7 @@ class Landing {
     if (/Linux|X11/.test(navigator.userAgent) && !/Android/.test(navigator.userAgent)) swapDownloadButtons();
     this.startHero();
     this.startClouds();
+    loadRelease();
     const IN = 'max(clamp(16px,4vw,48px),calc((100% - 1200px) / 2))';
     let full = null;
     this.onNavScroll = () => {
