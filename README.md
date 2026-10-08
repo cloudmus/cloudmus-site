@@ -54,4 +54,18 @@ The result is cached in `localStorage` for 10 minutes (the unauthenticated API l
 
 ## Deploy
 
-GitHub → Settings → Pages → Source: **GitHub Actions**. Pushing to `main` builds and publishes `dist/`.
+The site is published by GitHub Actions (`.github/workflows/pages.yml`) on every push to `master`, at the custom domain **https://cloudmus.app**. `build.mjs` uses that domain by default for canonical/hreflang links, `sitemap.xml` and `robots.txt` (override with `SITE_URL=...`, disable with `SITE_URL=`).
+
+One-time setup:
+
+1. Create the repository (for example `cloudmus/cloudmus-site`) and push `master`.
+2. Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+3. At the domain registrar, add DNS records for the apex `cloudmus.app`:
+   - `A`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - `AAAA`: `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
+   - optional `www` → `CNAME` `cloudmus.github.io`
+4. Settings → Pages → Custom domain: `cloudmus.app`. With an Actions deploy no `CNAME` file is needed; the domain is stored in the repository settings.
+5. Organization settings → Pages → verify `cloudmus.app` (TXT record), so no other repository can claim the domain.
+6. `.app` is HSTS-preloaded: browsers only open it over HTTPS. Wait until GitHub issues the certificate, then enable **Enforce HTTPS**.
+
+SEO ideas that are not done yet are collected in [docs/seo.md](docs/seo.md).

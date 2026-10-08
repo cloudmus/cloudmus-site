@@ -5,6 +5,7 @@ Static, multilingual landing page for CloudMus, built by `build.mjs` and deploye
 ## Rules
 
 - Edit `src/index.template.html`, `i18n/*.json`, `assets/` and `build.mjs`. Never edit or commit `dist/`.
+- The site lives at the apex domain `https://cloudmus.app` (`SITE_URL` default in `build.mjs`), deployed from `master`. Pending SEO work is tracked in `docs/seo.md`.
 - No frameworks, no npm packages, no bundler. The generator uses only Node built-ins.
 - All user-visible text (including `alt`, `title`, `aria-label`, meta tags) is a `{{key}}` from `i18n/*.json`; never hard-code a language in the template or in JS. Product names (CloudMus, Yandex Music, ...) and file names stay literal.
 - `i18n/en.json` is the source of truth. When you add or rename a key, update all six dictionaries in the same change. Run `node build.mjs`: it must finish with no warnings and no errors.

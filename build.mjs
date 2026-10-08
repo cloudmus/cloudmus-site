@@ -1,5 +1,5 @@
 // Static site generator: src/index.template.html + i18n/*.json -> dist/.
-// Usage: node build.mjs   (set SITE_URL to emit canonical/hreflang/sitemap)
+// Usage: node build.mjs   (SITE_URL defaults to https://cloudmus.app; SITE_URL= disables canonical/hreflang/sitemap)
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 
 const DEFAULT_LANG = 'en';
@@ -11,7 +11,7 @@ const LANGS = {
   es: { name: 'Español', locale: 'es_ES' },
   it: { name: 'Italiano', locale: 'it_IT' },
 };
-const SITE_URL = (process.env.SITE_URL || '').replace(/\/+$/, '');
+const SITE_URL = (process.env.SITE_URL ?? 'https://cloudmus.app').replace(/\/+$/, '');
 // Google Analytics 4 measurement ID (public). Override with GA_MEASUREMENT_ID; set it to an empty string to build without analytics.
 const GA_ID = process.env.GA_MEASUREMENT_ID ?? 'G-YNEY7DECKV';
 if (GA_ID && !/^G-[A-Z0-9]+$/.test(GA_ID)) { console.error(`error: invalid GA_MEASUREMENT_ID "${GA_ID}"`); process.exit(1); }
@@ -61,6 +61,27 @@ rmSync('dist', { recursive: true, force: true });
 mkdirSync('dist');
 cpSync('assets', 'dist/assets', { recursive: true });
 writeFileSync('dist/.nojekyll', '');
+const notFound = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Page not found — CloudMus</title>
+<link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body style="min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px">
+<main>
+<img src="/assets/img/logo.svg" alt="CloudMus" style="width:72px;height:72px">
+<h1 style="margin:20px 0 8px;font-size:clamp(28px,5vw,44px);letter-spacing:-.03em">Page not found</h1>
+<p class="c-soft" style="margin:0 0 24px">The page you are looking for does not exist.</p>
+<p style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-weight:600">${Object.entries(LANGS).map(([l, { name }]) => `<a href="/${pathOf(l)}" lang="${l}">${name}</a>`).join('')}</p>
+</main>
+</body>
+</html>
+`;
+writeFileSync('dist/404.html', notFound);
 for (const lang of Object.keys(LANGS)) {
   const dir = 'dist/' + pathOf(lang);
   mkdirSync(dir, { recursive: true });
