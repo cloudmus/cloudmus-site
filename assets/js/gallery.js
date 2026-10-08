@@ -24,7 +24,17 @@
     slides.forEach((s, i) => {
       let d = wrap(i - cur);
       if (d > n / 2) d -= n;
-      s.dataset.pos = Math.abs(d) <= 2 ? String(d) : 'far';
+      // Slides beyond +-2 wait on their own side (never in the middle), so a fast click
+      // sequence cannot sweep a slide across the centre.
+      const pos = String(Math.max(-3, Math.min(3, d)));
+      if (s._d !== undefined && Math.abs(d - s._d) > 3) {
+        // wrapped around the drum: jump to the other side without animating the sweep
+        s.style.transition = 'none';
+        s.dataset.pos = pos;
+        void s.offsetWidth;
+        requestAnimationFrame(() => { s.style.transition = ''; });
+      } else s.dataset.pos = pos;
+      s._d = d;
       s.tabIndex = d === 0 ? 0 : -1;
       s.setAttribute('aria-hidden', Math.abs(d) > 1 ? 'true' : 'false');
     });

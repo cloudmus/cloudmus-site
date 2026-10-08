@@ -15,6 +15,8 @@
 <link rel="icon" href="{{base}}assets/img/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="{{base}}assets/css/style.css">
 <script src="{{base}}assets/js/lang.js"></script>
+<script src="{{base}}assets/js/nav.js" defer></script>
+<script src="{{base}}assets/js/changelog.js" defer></script>
 <script src="{{base}}assets/js/main.js" defer></script>
 <script src="{{base}}assets/js/gallery.js" defer></script>
 </head>
@@ -35,23 +37,36 @@
     <header class="site-header" style="position:sticky;top:0;z-index:10;padding:14px clamp(16px,4vw,48px)">
       <div id="nav-bg" aria-hidden="true" style="position:absolute;top:14px;bottom:14px;left:max(clamp(16px,4vw,48px),calc((100% - 1200px) / 2));right:max(clamp(16px,4vw,48px),calc((100% - 1200px) / 2));border-radius:16px;background:rgba(30,24,21,.55);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:1px solid rgba(255,255,255,.08);transition:top .45s cubic-bezier(.2,.8,.2,1),bottom .45s cubic-bezier(.2,.8,.2,1),left .45s cubic-bezier(.2,.8,.2,1),right .45s cubic-bezier(.2,.8,.2,1),border-radius .45s cubic-bezier(.2,.8,.2,1),border-color .45s,background .45s;pointer-events:none"></div>
       <nav style="position:relative;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 12px 10px 16px;border:1px solid transparent">
-        <a href="#top" style="display:flex;align-items:center;gap:10px;color:#f3ede9">
-          <img src="{{base}}assets/img/logo.svg" alt="CloudMus" style="width:30px;height:30px;display:block">
-          <span style="font-family:Rubik,sans-serif;font-weight:700;font-size:17px;letter-spacing:-.01em">CloudMus</span>
-        </a>
-        <div style="display:flex;align-items:center;gap:clamp(12px,2.4vw,28px);font-size:14px;font-weight:600;flex-wrap:wrap;justify-content:flex-end">
+        <div class="brand">
+          <a href="#top" style="display:flex;align-items:center;gap:10px;color:#f3ede9">
+            <img src="{{base}}assets/img/logo.svg" alt="CloudMus" style="width:30px;height:30px;display:block">
+            <span style="font-family:Rubik,sans-serif;font-weight:700;font-size:17px;letter-spacing:-.01em">CloudMus</span>
+          </a>
+          <a class="ver" data-release-version aria-haspopup="dialog" aria-controls="changelog" aria-expanded="false" href="https://github.com/cloudmus/cloudmus/releases/latest" target="_blank" rel="noopener" title="{{nav.version}}" hidden></a>
+        </div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="{{nav.menu}}"><span></span><span></span><span></span></button>
+        <div class="nav-links" id="nav-menu">
           <a class="c-soft" href="#shot">{{nav.screenshots}}</a>
           <a class="c-soft" href="#services">{{nav.services}}</a>
           <a class="c-soft" href="#features">{{nav.features}}</a>
           <a class="c-soft" href="#download">{{nav.download}}</a>
+          <div class="nav-tools">
           <a href="https://github.com/cloudmus/cloudmus" target="_blank" aria-label="GitHub" title="GitHub" style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#f3ede9"><svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor" aria-hidden="true" style="display:block"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
           {{lang_switcher}}
+          </div>
+        </div>
+              <div class="changelog" id="changelog" role="dialog" aria-labelledby="changelog-title" tabindex="-1" data-loading="{{changelog.loading}}" data-error="{{changelog.error}}" data-all="{{changelog.all}}">
+          <div class="cl-head">
+            <h2 id="changelog-title">{{changelog.title}}</h2>
+            <button class="cl-close" type="button" aria-label="{{changelog.close}}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+          <div class="cl-body"></div>
         </div>
       </nav>
     </header>
 
     <section id="top" style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,48px);text-align:center">
-      <div style="min-height:calc(100svh - 84px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(8px,1.8vh,22px);padding:clamp(4px,1.5vh,24px) 0 clamp(16px,3vh,40px)">
+      <div class="hero-main">
       <div style="position:relative;margin:0 auto;width:100%;height:clamp(130px,min(34vw,36vh),420px);display:flex;align-items:center;justify-content:center">
         <div id="hero-canvas" aria-hidden="true" style="position:absolute;left:50%;top:50%;width:100vw;height:100svh;min-height:600px;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;overflow:hidden;contain:strict"></div>
         <svg id="hero-logo" viewBox="0 0 16 16" aria-label="CloudMus" style="position:relative;display:block;height:clamp(110px,min(26vw,28vh),320px);width:auto;aspect-ratio:1;overflow:visible;will-change:transform">
@@ -74,11 +89,11 @@
         <div class="gallery" data-gallery role="region" aria-roledescription="carousel" aria-label="{{gallery.label}}">
           <div class="g-stage">
             <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/player.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/player-960.webp" srcset="{{base}}assets/img/screenshots/player-960.webp 960w, {{base}}assets/img/screenshots/player.webp 1528w" sizes="(max-width: 1160px) 92vw, 1104px" width="1528" height="1037" alt="{{shot.player}}" decoding="async"></button>
-            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/history.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/history-960.webp" srcset="{{base}}assets/img/screenshots/history-960.webp 960w, {{base}}assets/img/screenshots/history.webp 1519w" sizes="(max-width: 1160px) 92vw, 1104px" width="1519" height="1003" alt="{{shot.history}}" decoding="async" loading="lazy"></button>
-            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/track-info.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/track-info.webp" width="786" height="673" alt="{{shot.track}}" decoding="async" loading="lazy"></button>
-            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/downloads.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/downloads.webp" width="737" height="280" alt="{{shot.downloads}}" decoding="async" loading="lazy"></button>
-            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/settings.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/settings-960.webp" srcset="{{base}}assets/img/screenshots/settings-960.webp 960w, {{base}}assets/img/screenshots/settings.webp 1313w" sizes="(max-width: 1160px) 92vw, 1104px" width="1313" height="881" alt="{{shot.settings}}" decoding="async" loading="lazy"></button>
-            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/about.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/about-960.webp" srcset="{{base}}assets/img/screenshots/about-960.webp 960w, {{base}}assets/img/screenshots/about.webp 1128w" sizes="(max-width: 1160px) 92vw, 1104px" width="1128" height="653" alt="{{shot.about}}" decoding="async" loading="lazy"></button>
+            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/history.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/history-960.webp" srcset="{{base}}assets/img/screenshots/history-960.webp 960w, {{base}}assets/img/screenshots/history.webp 1519w" sizes="(max-width: 1160px) 92vw, 1104px" width="1519" height="1003" alt="{{shot.history}}" decoding="async"></button>
+            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/track-info.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/track-info.webp" width="786" height="673" alt="{{shot.track}}" decoding="async"></button>
+            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/downloads.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/downloads.webp" width="737" height="280" alt="{{shot.downloads}}" decoding="async"></button>
+            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/settings.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/settings-960.webp" srcset="{{base}}assets/img/screenshots/settings-960.webp 960w, {{base}}assets/img/screenshots/settings.webp 1313w" sizes="(max-width: 1160px) 92vw, 1104px" width="1313" height="881" alt="{{shot.settings}}" decoding="async"></button>
+            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/about.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/about-960.webp" srcset="{{base}}assets/img/screenshots/about-960.webp 960w, {{base}}assets/img/screenshots/about.webp 1128w" sizes="(max-width: 1160px) 92vw, 1104px" width="1128" height="653" alt="{{shot.about}}" decoding="async"></button>
           </div>
           <button class="g-arrow g-prev" type="button" aria-label="{{gallery.prev}}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
           <button class="g-arrow g-next" type="button" aria-label="{{gallery.next}}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
@@ -99,7 +114,7 @@
         <h2 style="margin:0;font-family:Rubik,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,54px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance">{{services.title}}</h2>
       </div>
 
-      <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+      <div class="svc-grid">
       <div class="svc-card">
         <div class="svc-head">
           <div class="svc-icon-box">
@@ -184,7 +199,7 @@
 
     <section class="section" id="features">
       <h2 style="margin:0;max-width:760px;font-family:Rubik,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,54px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance">{{nav.features}}</h2>
-      <div id="cloud-grid" style="position:relative;margin-top:56px;min-height:600px">
+      <div id="cloud-grid" class="cloud-grid">
         <canvas id="feat-canvas" aria-hidden="true" style="position:absolute;left:-8%;top:-6%;width:116%;height:112%;pointer-events:none"></canvas>
         <div class="cloud" data-cloud="1">
           <svg class="cloud-shape" data-cloud-shape="1" viewBox="0.3 2.6 15.3 10.2" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><g fill="rgb(255,240,232)" opacity=".12"><circle cx="3.4" cy="9.4" r="2.9"></circle><circle cx="7.2" cy="6.6" r="3.8"></circle><circle cx="11.4" cy="7.6" r="3"></circle><circle cx="13" cy="10" r="2.4"></circle><circle cx="8.2" cy="9.6" r="3"></circle></g></svg>
@@ -306,14 +321,14 @@
         <h2 style="margin:0;font-family:Rubik,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,54px);line-height:1.04;letter-spacing:-.03em">{{download.title}}</h2>
         <p style="margin:18px auto 0;max-width:520px;font-size:17px;line-height:1.6;color:#cfc4bd">{{download.lead_before}} <a class="link-accent" href="https://github.com/cloudmus/cloudmus/releases" target="_blank" style="color:#ff7a4d;text-decoration:underline;text-underline-offset:3px;white-space:nowrap">{{download.lead_link}}</a>.</p>
       </div>
-      <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px">
+      <div class="dl-grid">
 
         <div class="dl-card">
           <div class="dl-head">
             <h3 class="dl-title"><svg class="icon-block" viewBox="0 0 24 24" width="26" height="26" fill="#f3ede9" aria-hidden="true"><rect x="2" y="2" width="9.5" height="9.5" rx="1"></rect><rect x="12.5" y="2" width="9.5" height="9.5" rx="1"></rect><rect x="2" y="12.5" width="9.5" height="9.5" rx="1"></rect><rect x="12.5" y="12.5" width="9.5" height="9.5" rx="1"></rect></svg>Windows</h3>
             <span class="meta-note">{{download.win.req}}<span data-release-meta="windows"></span></span>
           </div>
-          <div style="padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.3);font-family:'JetBrains Mono',monospace;font-size:13px;color:#e8ddd6;overflow-x:auto" data-release-file="windows">CloudMus-&lt;version&gt;-x86_64-Setup.exe</div>
+          <div class="dl-file" data-release-file="windows">CloudMus-&lt;version&gt;-x86_64-Setup.exe</div>
           <ul class="dl-list">
             <li>{{download.win.note}}</li>
           </ul>
@@ -325,7 +340,7 @@
             <h3 class="dl-title"><svg class="icon-block" viewBox="0 0 24 28" width="24" height="28" aria-hidden="true"><ellipse cx="12" cy="15.5" rx="8" ry="10" fill="#f3ede9"></ellipse><ellipse cx="12" cy="17.5" rx="5.2" ry="7.2" fill="#15110f"></ellipse><circle cx="9.6" cy="8.6" r="1.7" fill="#15110f"></circle><circle cx="14.4" cy="8.6" r="1.7" fill="#15110f"></circle><path d="M9.6 11.2h4.8L12 14z" fill="#15110f"></path><path d="M3.5 25.6c0-1.8 2-2.8 4.6-2.8s3.4 1.2 3.4 2.2-1 1.6-4 1.6-4-.2-4-1zM20.5 25.6c0-1.8-2-2.8-4.6-2.8s-3.4 1.2-3.4 2.2 1 1.6 4 1.6 4-.2 4-1z" fill="#f3ede9"></path></svg>Linux</h3>
             <span class="meta-note">x86_64, glibc 2.31+<span data-release-meta="linux"></span></span>
           </div>
-          <div style="padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.3);font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;color:#e8ddd6;overflow-x:auto;white-space:pre"><span class="c-dim">$</span> chmod +x <span data-release-file="linux">CloudMus-*-x86_64.AppImage</span>
+          <div class="dl-file dl-file-pre"><span class="c-dim">$</span> chmod +x <span data-release-file="linux">CloudMus-*-x86_64.AppImage</span>
 <span class="c-dim">$</span> ./<span data-release-file="linux">CloudMus-*-x86_64.AppImage</span></div>
           <ul class="dl-list">
             <li>{{download.linux.note}}</li>
@@ -377,12 +392,12 @@
       <div id="pulse-layer" style="position:absolute;inset:0;overflow:hidden"></div>
       <div style="position:absolute;left:0;right:0;top:calc(100% - 1px);height:1200px;background:#17110f"></div>
       </div>
-      <div style="position:relative;max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,48px);display:flex;justify-content:space-between;align-items:center;gap:16px 32px;flex-wrap:wrap;font-size:14px;color:#9a8d85">
+      <div class="footer-row">
         <div style="display:flex;align-items:center;gap:10px">
           <img src="{{base}}assets/img/logo.svg" alt="" style="width:22px;height:22px;display:block">
           <span>{{footer.license}}</span>
         </div>
-        <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div class="footer-links">
           <a class="c-soft" href="https://github.com/cloudmus/cloudmus" target="_blank">GitHub</a>
           <a class="c-soft" href="https://github.com/cloudmus/cloudmus/blob/master/CHANGELOG.md" target="_blank">Changelog</a>
           <a class="c-soft" href="https://github.com/cloudmus/cloudmus/blob/master/docs/development.md" target="_blank">{{footer.dev}}</a>

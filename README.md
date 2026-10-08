@@ -13,6 +13,8 @@ build.mjs                 generator: template + dictionaries -> dist/
 assets/css/style.css      @font-face, keyframes, hover states, language switcher
 assets/js/main.js         animations, OS-aware hero buttons, latest-release data
 assets/js/lang.js         language remembering and browser-language redirect
+assets/js/nav.js          mobile hamburger menu
+assets/js/changelog.js    release-notes panel opened from the version badge
 assets/js/gallery.js      screenshot carousel: arrows, dots, swipe, autoplay, fullscreen popup
 assets/fonts/             self-hosted Rubik and JetBrains Mono (woff2)
 assets/img/               logo and service logos
@@ -51,6 +53,8 @@ On load, `assets/js/main.js` (`loadRelease`) calls `https://api.github.com/repos
 
 - points every download link (`a[data-asset="windows|linux"]`, in the hero and in the download cards) at the release's `*-Setup.exe` / `*.AppImage` asset,
 - replaces the placeholder file names (`[data-release-file]`) and shows version and size (`[data-release-meta]`, unit from `data-unit-mb`).
+
+The version badge in the header (`[data-release-version]`) is filled from the same data; clicking it opens a changelog panel (`assets/js/changelog.js`) that loads the last releases from `/releases` on first use (also cached for 10 minutes).
 
 The result is cached in `localStorage` for 10 minutes (the unauthenticated API limit is 60 requests per hour per IP). If the request fails, the static fallbacks stay: links go to `/releases/latest` and file names are generic.
 

@@ -39,6 +39,13 @@ const fetchRelease = async () => {
 const loadRelease = async () => {
   const release = await fetchRelease();
   if (!release) return;
+  if (release.tag) {
+    document.querySelectorAll('[data-release-version]').forEach(el => {
+      el.textContent = (/^\d/.test(release.tag) ? 'v' : '') + release.tag;
+      el.href = 'https://github.com/cloudmus/cloudmus/releases/tag/' + encodeURIComponent(release.tag);
+      el.hidden = false;
+    });
+  }
   const unitEl = document.querySelector('[data-unit-mb]');
   const unit = unitEl ? unitEl.dataset.unitMb : 'MB';
   const mb = new Intl.NumberFormat(document.documentElement.lang || 'en');
@@ -167,6 +174,27 @@ class Landing {
         const els = grid.querySelectorAll('[data-cloud]');
         const gr = grid.getBoundingClientRect(), W = grid.clientWidth, n = els.length;
         const near = mouse.x > gr.left - 320 && mouse.x < gr.right + 320 && mouse.y > gr.top - 320 && mouse.y < gr.bottom + 320;
+        // Phones: a CSS two-column grid of compact clouds instead of the physics layout.
+        const compact = W < 640;
+        if (compact !== !!lay.compact) {
+          lay.compact = compact; lay.W = 0; lay.done = false;
+          grid.classList.toggle('compact', compact);
+          grid.style.height = '';
+          els.forEach((el, i) => {
+            const sh = el.querySelector('[data-cloud-shape]');
+            if (sh) sh.setAttribute('preserveAspectRatio', compact ? 'none' : 'xMidYMid meet');
+            if (compact) el.style.transform = 'rotate(' + ((rnd(i + 99) - .5) * 3).toFixed(2) + 'deg)';
+          });
+        }
+        if (compact) {
+          els.forEach((el, i) => {
+            if (st[i]) return;
+            st[i] = { rot: 0, sc: 1, x: 0, y: 0 };
+            const sh = el.querySelector('[data-cloud-shape]');
+            if (sh) { sh.firstChild.innerHTML = cmSvg(i + 1); if (rnd(i + 7) > .5) sh.style.transform = 'scaleX(-1)'; }
+          });
+          this.cloudRaf = requestAnimationFrame(tick); return;
+        }
         const laid = W === lay.W && n === lay.n && lay.done;
         if (laid && (gr.bottom < -200 || gr.top > innerHeight + 200 || (!near && lay.idle))) { this.cloudRaf = requestAnimationFrame(tick); return; }
         if (!lay.ch || W !== lay.W) lay.ch = els[0] ? els[0].offsetHeight : 190;
