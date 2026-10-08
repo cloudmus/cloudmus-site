@@ -13,8 +13,10 @@ build.mjs                 generator: template + dictionaries -> dist/
 assets/css/style.css      @font-face, keyframes, hover states, language switcher
 assets/js/main.js         animations, OS-aware hero buttons, latest-release data
 assets/js/lang.js         language remembering and browser-language redirect
+assets/js/gallery.js      screenshot carousel: arrows, dots, swipe, autoplay, fullscreen popup
 assets/fonts/             self-hosted Rubik and JetBrains Mono (woff2)
-assets/img/               logo, app screenshot, service logos
+assets/img/               logo and service logos
+assets/img/screenshots/   carousel screenshots (WebP: <name>.webp full size, <name>-960.webp for the carousel)
 .github/workflows/pages.yml   builds and deploys to GitHub Pages
 dist/                     build output (git-ignored)
 ```

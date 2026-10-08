@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="{{base}}assets/css/style.css">
 <script src="{{base}}assets/js/lang.js"></script>
 <script src="{{base}}assets/js/main.js" defer></script>
+<script src="{{base}}assets/js/gallery.js" defer></script>
 </head>
 <body>
 <div style="position:relative;min-height:100vh;overflow:clip;background:#15110f">
@@ -39,6 +40,7 @@
           <span style="font-family:Rubik,sans-serif;font-weight:700;font-size:17px;letter-spacing:-.01em">CloudMus</span>
         </a>
         <div style="display:flex;align-items:center;gap:clamp(12px,2.4vw,28px);font-size:14px;font-weight:600;flex-wrap:wrap;justify-content:flex-end">
+          <a class="c-soft" href="#shot">{{nav.screenshots}}</a>
           <a class="c-soft" href="#services">{{nav.services}}</a>
           <a class="c-soft" href="#features">{{nav.features}}</a>
           <a class="c-soft" href="#download">{{nav.download}}</a>
@@ -69,9 +71,26 @@
 
       <div id="shot" style="position:relative;margin:0 auto;max-width:1120px">
         <div style="position:absolute;inset:8% 6% -4%;background:radial-gradient(closest-side,rgba(255,90,43,.4),rgba(255,90,43,.12) 60%,transparent)"></div>
-        <div style="position:relative;border-radius:18px;padding:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);box-shadow:0 40px 120px -20px rgba(0,0,0,.8)">
-          <img src="{{base}}assets/img/app-screenshot.png" alt="{{hero.screenshot_alt}}" style="display:block;width:100%;height:auto;border-radius:12px">
+        <div class="gallery" data-gallery role="region" aria-roledescription="carousel" aria-label="{{gallery.label}}">
+          <div class="g-stage">
+            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/player.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/player-960.webp" srcset="{{base}}assets/img/screenshots/player-960.webp 960w, {{base}}assets/img/screenshots/player.webp 1528w" sizes="(max-width: 1160px) 92vw, 1104px" width="1528" height="1037" alt="{{shot.player}}" decoding="async"></button>
+            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/history.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/history-960.webp" srcset="{{base}}assets/img/screenshots/history-960.webp 960w, {{base}}assets/img/screenshots/history.webp 1519w" sizes="(max-width: 1160px) 92vw, 1104px" width="1519" height="1003" alt="{{shot.history}}" decoding="async" loading="lazy"></button>
+            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/track-info.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/track-info.webp" width="786" height="673" alt="{{shot.track}}" decoding="async" loading="lazy"></button>
+            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/downloads.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/downloads.webp" width="737" height="280" alt="{{shot.downloads}}" decoding="async" loading="lazy"></button>
+            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/settings.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/settings-960.webp" srcset="{{base}}assets/img/screenshots/settings-960.webp 960w, {{base}}assets/img/screenshots/settings.webp 1313w" sizes="(max-width: 1160px) 92vw, 1104px" width="1313" height="881" alt="{{shot.settings}}" decoding="async" loading="lazy"></button>
+            <button class="g-slide" type="button" data-full="{{base}}assets/img/screenshots/about.webp" title="{{gallery.open}}"><img src="{{base}}assets/img/screenshots/about-960.webp" srcset="{{base}}assets/img/screenshots/about-960.webp 960w, {{base}}assets/img/screenshots/about.webp 1128w" sizes="(max-width: 1160px) 92vw, 1104px" width="1128" height="653" alt="{{shot.about}}" decoding="async" loading="lazy"></button>
+          </div>
+          <button class="g-arrow g-prev" type="button" aria-label="{{gallery.prev}}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+          <button class="g-arrow g-next" type="button" aria-label="{{gallery.next}}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+          <div class="g-dots"></div>
         </div>
+        <dialog class="g-lightbox" aria-label="{{gallery.label}}">
+          <img class="g-lb-img" src="" alt="">
+          <button class="g-arrow g-lb-prev" type="button" aria-label="{{gallery.prev}}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+          <button class="g-arrow g-lb-next" type="button" aria-label="{{gallery.next}}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+          <button class="g-lb-close" type="button" aria-label="{{gallery.close}}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          <div class="g-lb-count" aria-live="polite"></div>
+        </dialog>
       </div>
     </section>
 

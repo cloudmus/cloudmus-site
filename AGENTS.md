@@ -14,7 +14,7 @@ Static, multilingual landing page for CloudMus, built by `build.mjs` and deploye
 - Styles repeated across elements (cards, chips, feature clouds, section wrapper, text colors) are classes in `assets/css/style.css`; one-off layout stays inline in the template. If the same inline `style` appears twice, make it a class. The stylesheet also holds `@font-face`, keyframes, hover states and the language switcher.
 - `assets/js/main.js` drives the animations through element ids (`hero-canvas`, `nav-bg`, `planet`, `cloud-grid`, `shot`, `bg-layer`, ...) and `data-cloud`, `data-k`. If you rename an id in the template, update `main.js`.
 - Asset names are lowercase kebab-case English. Paths in the template use `{{base}}assets/...` so every language folder resolves them (works under a GitHub Pages project path too).
-- Keep images small (compress screenshots); fonts are woff2, Cyrillic and Latin subsets only.
+- Keep images small; fonts are woff2, Cyrillic and Latin subsets only. Screenshots live in `assets/img/screenshots/` as WebP: `<name>.webp` (≤1920 px wide, used in the popup) plus `<name>-960.webp` for the carousel `srcset` when the original is wider than 960 px. Each slide in the template needs `width`/`height` and a localized `alt` (`shot.*` keys). `assets/js/gallery.js` drives the carousel (`[data-gallery]`, `.g-slide`, `.g-lightbox`).
 - Code, comments, file names and docs are English.
 - There are no tests. Verify in a browser: build, serve `dist/` over HTTP, check every language renders, the console is clean and the network tab shows no external requests except the release API.
 - Do not commit unless asked.
