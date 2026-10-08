@@ -39,6 +39,10 @@ Setting `SITE_URL` (for example `SITE_URL=https://example.org/cloudmus node buil
 - **Translations of de, fr, es and it were drafted by an AI and should be proof-read by native speakers.**
 - The root page (English) sends first-time visitors to their browser language when a translation exists. The choice made in the switcher is stored in `localStorage` (`cloudmus.lang`) and stops further redirects.
 
+## Analytics
+
+Google Analytics 4 (measurement ID `G-YNEY7DECKV`, set in `build.mjs`) is injected into every page at build time. Override with `GA_MEASUREMENT_ID=G-XXXXXXXXXX node build.mjs`, or build without analytics using `GA_MEASUREMENT_ID= node build.mjs`. Note: GA sets cookies, so visitors from the EU/UK normally need a consent banner (not implemented).
+
 ## Release data
 
 On load, `assets/js/main.js` (`loadRelease`) calls `https://api.github.com/repos/cloudmus/cloudmus/releases/latest` and:

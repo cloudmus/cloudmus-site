@@ -12,6 +12,12 @@ const LANGS = {
   it: { name: 'Italiano', locale: 'it_IT' },
 };
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/+$/, '');
+// Google Analytics 4 measurement ID (public). Override with GA_MEASUREMENT_ID; set it to an empty string to build without analytics.
+const GA_ID = process.env.GA_MEASUREMENT_ID ?? 'G-YNEY7DECKV';
+if (GA_ID && !/^G-[A-Z0-9]+$/.test(GA_ID)) { console.error(`error: invalid GA_MEASUREMENT_ID "${GA_ID}"`); process.exit(1); }
+const analytics = GA_ID
+  ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}',{anonymize_ip:true});</script>`
+  : '';
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const readJson = f => JSON.parse(readFileSync(f, 'utf8'));
@@ -43,7 +49,7 @@ const render = lang => {
       `<link rel="alternate" hreflang="x-default" href="${urlOf(DEFAULT_LANG)}">`].join('\n');
   }
   const vars = { ...Object.fromEntries(Object.entries(dict).map(([k, v]) => [k, esc(v)])),
-    lang, base, og_locale: LANGS[lang].locale, head_extra: head, lang_switcher: switcher,
+    lang, base, og_locale: LANGS[lang].locale, head_extra: head, analytics, lang_switcher: switcher,
     html_attrs: lang === DEFAULT_LANG ? ' data-lang-root' : '' };
   return template.replace(/\{\{([\w.]+)\}\}/g, (_, k) => {
     if (!(k in vars)) { fail(`template uses unknown placeholder "${k}"`); return ''; }
