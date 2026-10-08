@@ -14,3 +14,46 @@ a:hover{color:#ffa07f}
 .btn-secondary:hover{background:rgba(255,255,255,.12)!important;color:#fff!important}
 .btn-ghost:hover{background:rgba(255,255,255,.14)!important;color:#fff!important}
 .link-accent:hover{color:#ffa07f!important}
+.lang{position:relative}
+.lang summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;height:38px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#f3ede9;font-size:13px;font-weight:700;letter-spacing:.04em}
+.lang summary::-webkit-details-marker{display:none}
+.lang summary:hover,.lang[open] summary{background:rgba(255,255,255,.12)}
+.lang-menu{position:absolute;right:0;top:calc(100% + 8px);min-width:160px;padding:6px;border-radius:14px;background:rgba(30,24,21,.96);border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 50px -10px rgba(0,0,0,.7);display:flex;flex-direction:column;z-index:20}
+.lang-menu a{padding:9px 12px;border-radius:9px;color:#cfc4bd;font-size:14px;font-weight:600;white-space:nowrap}
+.lang-menu a:hover,.lang-menu a[aria-current]{background:rgba(255,255,255,.08);color:#fff}
+@keyframes cmSlideIn{from{opacity:0;transform:translateY(-28px)}to{opacity:1;transform:none}}
+/* Animate the children, not <header>: an animated ancestor becomes a backdrop root in Chrome and kills #nav-bg's backdrop-filter. */
+.site-header>*{animation:cmSlideIn .8s cubic-bezier(.2,.8,.2,1) backwards}
+.lang[open] .lang-menu{animation:cmSlideIn .28s cubic-bezier(.2,.8,.2,1) both}
+@keyframes cmSlideOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-12px)}}
+.lang.closing .lang-menu{animation:cmSlideOut .2s ease-in both}
+@media (prefers-reduced-motion:reduce){.site-header>*,.lang[open] .lang-menu,.lang.closing .lang-menu{animation:none}}
+
+/* Shared layout classes (moved out of inline styles in the template) */
+.cloud{position:absolute;left:0;top:0;width:300px;height:200px;will-change:transform}
+.cloud-shape{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.cloud-title{margin:0;font-size:19px;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.cloud-text{margin:0;font-size:15px;line-height:1.5;color:#e2d6ce;text-wrap:pretty}
+.c-muted{color:#9a8d85}
+.c-text{color:#f3ede9}
+.c-soft{color:#cfc4bd}
+.c-dim{color:#7d716a}
+.logo-part{transform-origin:8px 8px;will-change:transform}
+.icon-block{display:block;flex:none}
+.section{max-width:1200px;margin:0 auto;padding:clamp(80px,12vw,150px) clamp(16px,4vw,48px) 0}
+.svc-head{display:flex;align-items:center;gap:14px;min-width:0}
+.svc-name{margin:0;font-family:Rubik,sans-serif;font-weight:700;font-size:21px;letter-spacing:-.02em}
+.col{display:flex;flex-direction:column}
+.svc-icon{width:28px;height:28px;display:block}
+.meta-note{font-size:14px;color:#9a8d85}
+.dl-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.dl-title{margin:0;display:flex;align-items:center;gap:12px;font-family:Rubik,sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em}
+.dl-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.5;color:#cfc4bd}
+.svc-row{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:11px 0;border-top:1px solid rgba(255,255,255,.07);font-size:14px;line-height:1.45}
+.chip{display:flex;align-items:center;height:40px;padding:0 16px;border-radius:999px;background:rgba(255,255,255,.05);font-size:14px;font-weight:600;color:#cfc4bd}
+.cloud-body{position:relative;height:200px;padding:62px 44px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px}
+.svc-card{padding:28px;border-radius:20px;background:rgba(36,29,25,.6);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:22px}
+.svc-icon-box{width:44px;height:44px;flex:none;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center}
+.dl-card{padding:clamp(24px,3vw,36px);border-radius:22px;background:rgba(36,29,25,.42);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);display:flex;flex-direction:column;gap:22px}
+a.c-muted,a.c-text,a.c-soft,a.c-dim{color:inherit}
+a.c-muted{color:#9a8d85}a.c-text{color:#f3ede9}a.c-soft{color:#cfc4bd}a.c-dim{color:#7d716a}

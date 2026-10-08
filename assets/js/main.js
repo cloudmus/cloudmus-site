@@ -39,12 +39,14 @@ const fetchRelease = async () => {
 const loadRelease = async () => {
   const release = await fetchRelease();
   if (!release) return;
-  const mb = new Intl.NumberFormat('ru');
+  const unitEl = document.querySelector('[data-unit-mb]');
+  const unit = unitEl ? unitEl.dataset.unitMb : 'MB';
+  const mb = new Intl.NumberFormat(document.documentElement.lang || 'en');
   for (const [os, a] of Object.entries(release.assets)) {
     document.querySelectorAll('a[data-asset="' + os + '"]').forEach(el => { el.href = a.url; el.removeAttribute('target'); });
     document.querySelectorAll('[data-release-file="' + os + '"]').forEach(el => { el.textContent = a.name; });
     document.querySelectorAll('[data-release-meta="' + os + '"]').forEach(el => {
-      el.textContent = ' · ' + [release.tag, a.size ? mb.format(Math.round(a.size / 1048576)) + ' МБ' : ''].filter(Boolean).join(' · ');
+      el.textContent = ' · ' + [release.tag, a.size ? mb.format(Math.round(a.size / 1048576)) + ' ' + unit : ''].filter(Boolean).join(' · ');
     });
   }
 };
@@ -106,6 +108,13 @@ class Landing {
     this.onPlanetScroll = () => { planetUpd(); orbUpd(); };
     orbUpd();
     this.onPlanetResize = () => { planetMeasure(); planetUpd(); };
+    const layoutBg = () => {
+      const bl = this.bgLayer.current, shot = document.getElementById('shot'), dl = document.getElementById('download');
+      if (!bl || !shot || !dl) return;
+      const pr = bl.parentElement.getBoundingClientRect(), t = shot.getBoundingClientRect().top - pr.top, b = dl.getBoundingClientRect().bottom - pr.top;
+      bl.style.top = t.toFixed(0) + 'px'; bl.style.height = Math.max(0, b - t).toFixed(0) + 'px';
+    };
+    layoutBg(); new ResizeObserver(layoutBg).observe(document.body); addEventListener('load', layoutBg);
     this.planetRO = new ResizeObserver(this.onPlanetResize); this.planetRO.observe(document.body);
     addEventListener('scroll', this.onPlanetScroll, { passive: true });
     addEventListener('resize', this.onPlanetResize);
@@ -317,31 +326,34 @@ class Landing {
         }
       }
       const bl = this.bgLayer.current;
-      if (bl && fc) {
-        if (!this.bgl) {
-          this.bgl = [];
-          for (let i = 0; i < 18; i++) {
-            const z = .2 + Math.random() * .8, warm = Math.random() < .3, w = Math.round(80 + z * 200);
+      if (bl) {
+        // Drifting clouds cover everything from the screenshot down to the download block.
+        const bh = bl.clientHeight, bw = bl.clientWidth;
+        if (bh > 0 && bw > 0) {
+          if (!this.bgl) this.bgl = [];
+          const want = Math.max(10, Math.min(120, Math.round(18 * (bh / 900) * (bw / 1390))));
+          while (this.bgl.length < want) {
+            const i = this.bgl.length, z = .2 + Math.random() * .8, warm = Math.random() < .3, w = Math.round(80 + z * 200);
             const im = new Image(); im.src = urlsD[warm ? 1 : 0][i % 4]; im.width = w; im.height = Math.round(w * 12.2 / 17.3); im.decoding = 'async';
             im.style.cssText = 'position:absolute;left:0;top:0;display:block;opacity:0.001;will-change:transform,opacity';
-            bl.appendChild(im); this.bgl.push({ im, z, w, fl: Math.random() < .5 ? ' scaleX(-1)' : '', op: warm ? 0.12 + z * 0.16 : 0.08 + z * 0.12, x: Math.random() * 1.1 - .1, y: Math.random() });
+            bl.appendChild(im);
+            this.bgl.push({ im, z, w, fl: Math.random() < .5 ? ' scaleX(-1)' : '', op: warm ? 0.12 + z * 0.16 : 0.08 + z * 0.12, x: Math.random() * 1.6 - .3, y: Math.random(), dir: Math.random() < .5 ? -1 : 1, vy: (Math.random() - .5) * .3 });
           }
-          this.bgl.sort((p, q) => p.z - q.z).forEach(c => bl.appendChild(c.im));
-        }
-        const br = bl.getBoundingClientRect();
-        if (br.bottom > 0 && br.top < innerHeight) {
-          const bw = bl.clientWidth, bh = bl.clientHeight, sy = (br.top + bh / 2 - innerHeight / 2);
+          while (this.bgl.length > want) this.bgl.pop().im.remove();
+          const br = bl.getBoundingClientRect(), vc = innerHeight / 2, fadeY = Math.min(bh * .18, 260), fz = innerWidth * .25;
+          const sm = v => { v = Math.max(0, Math.min(1, v)); return v * v * (3 - 2 * v); };
           for (const c of this.bgl) {
-            if (c.dir === undefined) { c.dir = Math.random() < .5 ? -1 : 1; c.vy = (Math.random() - .5) * .3; c.x = Math.random() * 1.6 - .3; }
             c.x += c.dir * dt * 0.000026 * (0.3 + c.z) * (on ? 1 : 0.3);
-            c.y += c.vy * dt * 0.000004;
+            c.y += c.vy * dt * 0.000004 * (900 / bh);
             if (c.x > 1.3 || c.x < -0.3) { c.x = c.dir > 0 ? -0.3 : 1.3; c.y = Math.random(); }
-            if (c.y > 1.1) c.y = -0.1; else if (c.y < -0.1) c.y = 1.1;
-            const px = c.x * bw, py = c.y * bh - c.w * .35 + sy * (c.z - .5) * 0.9, sxc = br.left + px + c.w / 2, syc = br.top + py + c.w * .35, fz = innerWidth * .25;
-            const sm = v => { v = Math.max(0, Math.min(1, v)); return v * v * (3 - 2 * v); };
-            const fe = sm(Math.min(c.x + 0.3, 1.3 - c.x) / 0.45) * sm(Math.min(sxc, innerWidth - sxc) / fz) * sm(Math.min(syc - br.top, br.bottom - syc) / (bh * .18));
-            c.im.style.transform = 'translate3d(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px,0)' + c.fl;
-            c.im.style.opacity = Math.max(0.001, c.op * fe).toFixed(4);
+            if (c.y > 1.05) c.y = -0.05; else if (c.y < -0.05) c.y = 1.05;
+            const st = c.im.style, py0 = c.y * bh - c.w * .35, ys = br.top + py0 + c.w * .35;
+            if (ys < -300 || ys > innerHeight + 300) { if (c.vis) { st.opacity = '0.001'; c.vis = false; } continue; }
+            // depth parallax: near clouds (large z) move faster than the page, far ones slower
+            const py = py0 + (ys - vc) * (c.z - .5) * 0.9, px = c.x * bw, sxc = br.left + px + c.w / 2, syc = br.top + py + c.w * .35;
+            const fe = sm(Math.min(c.x + 0.3, 1.3 - c.x) / 0.45) * sm(Math.min(sxc, innerWidth - sxc) / fz) * sm(Math.min(c.y * bh + 40, bh - c.y * bh + 40) / fadeY);
+            st.transform = 'translate3d(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px,0)' + c.fl;
+            st.opacity = Math.max(0.001, c.op * fe).toFixed(4); c.vis = true;
           }
         }
       }
