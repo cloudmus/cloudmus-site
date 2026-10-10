@@ -17,7 +17,7 @@ assets/js/nav.js          mobile hamburger menu
 assets/js/changelog.js    release-notes panel opened from the version badge
 assets/js/gallery.js      screenshot carousel: arrows, dots, swipe, autoplay, fullscreen popup
 assets/fonts/             self-hosted Rubik and JetBrains Mono (woff2)
-assets/img/               logo and service logos
+assets/img/               logo, service logos and PNG rasters of the logo (og-logo, apple-touch-icon, favicon-48)
 assets/img/screenshots/   carousel screenshots (WebP: <name>.webp full size, <name>-960.webp for the carousel)
 .github/workflows/pages.yml   builds and deploys to GitHub Pages
 dist/                     build output (git-ignored)
@@ -34,7 +34,7 @@ python -m http.server -d dist 8000
 
 Open <http://localhost:8000/>. Use a server rather than `file://`: the language redirect and links between languages expect real URLs.
 
-Setting `SITE_URL` (for example `SITE_URL=https://example.org/cloudmus node build.mjs`) also emits canonical and `hreflang` links, `og:url`, `sitemap.xml` and `robots.txt`. CI sets it automatically from the Pages configuration.
+Setting `SITE_URL` (for example `SITE_URL=https://example.org/cloudmus node build.mjs`) also emits canonical and `hreflang` links, `og:url`, `og:image`, JSON-LD, `sitemap.xml` and `robots.txt`. CI sets it automatically from the Pages configuration.
 
 ## Languages
 

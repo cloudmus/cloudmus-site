@@ -44,12 +44,28 @@ const render = lang => {
   const switcher = `<details class="lang"><summary aria-label="Language">${lang.toUpperCase()}</summary><div class="lang-menu">${links}</div></details>`;
   let head = '';
   if (SITE_URL) {
+    const ld = {
+      '@context': 'https://schema.org', '@type': 'SoftwareApplication',
+      name: 'CloudMus', description: dict['meta.description'], url: urlOf(lang), inLanguage: lang,
+      applicationCategory: 'MultimediaApplication', operatingSystem: 'Windows 10, Windows 11, Linux',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      image: SITE_URL + '/assets/img/og-logo.png', screenshot: SITE_URL + '/assets/img/screenshots/player.webp',
+      downloadUrl: 'https://github.com/cloudmus/cloudmus/releases/latest', license: 'https://opensource.org/licenses/MIT',
+      author: { '@type': 'Person', name: 'Vladislav Navrocky' },
+    };
     head = [`<link rel="canonical" href="${urlOf(lang)}">`, `<meta property="og:url" content="${urlOf(lang)}">`,
+      `<meta property="og:image" content="${SITE_URL}/assets/img/og-logo.png">`,
+      `<meta property="og:image:type" content="image/png">`,
+      `<meta property="og:image:width" content="512">`, `<meta property="og:image:height" content="512">`,
+      `<meta property="og:image:alt" content="CloudMus">`,
       ...Object.keys(LANGS).map(l => `<link rel="alternate" hreflang="${l}" href="${urlOf(l)}">`),
-      `<link rel="alternate" hreflang="x-default" href="${urlOf(DEFAULT_LANG)}">`].join('\n');
+      `<link rel="alternate" hreflang="x-default" href="${urlOf(DEFAULT_LANG)}">`,
+      `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`].join('\n');
   }
+  const fontPreload = lang === 'ru'
+    ? `<link rel="preload" href="${base}assets/fonts/rubik-cyrillic.woff2" as="font" type="font/woff2" crossorigin>` : '';
   const vars = { ...Object.fromEntries(Object.entries(dict).map(([k, v]) => [k, esc(v)])),
-    lang, base, og_locale: LANGS[lang].locale, head_extra: head, analytics, lang_switcher: switcher,
+    lang, base, og_locale: LANGS[lang].locale, head_extra: head, font_preload: fontPreload, analytics, lang_switcher: switcher,
     html_attrs: lang === DEFAULT_LANG ? ' data-lang-root' : '' };
   return template.replace(/\{\{([\w.]+)\}\}/g, (_, k) => {
     if (!(k in vars)) { fail(`template uses unknown placeholder "${k}"`); return ''; }
@@ -88,8 +104,11 @@ for (const lang of Object.keys(LANGS)) {
   writeFileSync(dir + 'index.html', render(lang));
 }
 if (SITE_URL) {
-  const urls = Object.keys(LANGS).map(l => `  <url><loc>${urlOf(l)}</loc></url>`).join('\n');
-  writeFileSync('dist/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
+  const today = new Date().toISOString().slice(0, 10);
+  const alts = [...Object.keys(LANGS).map(l => `<xhtml:link rel="alternate" hreflang="${l}" href="${urlOf(l)}"/>`),
+    `<xhtml:link rel="alternate" hreflang="x-default" href="${urlOf(DEFAULT_LANG)}"/>`].map(a => `\n    ${a}`).join('');
+  const urls = Object.keys(LANGS).map(l => `  <url>\n    <loc>${urlOf(l)}</loc>\n    <lastmod>${today}</lastmod>${alts}\n  </url>`).join('\n');
+  writeFileSync('dist/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`);
   writeFileSync('dist/robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 }
 if (failed) process.exit(1);

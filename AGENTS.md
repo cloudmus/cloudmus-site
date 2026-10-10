@@ -18,4 +18,5 @@ Static, multilingual landing page for CloudMus, built by `build.mjs` and deploye
 - Code, comments, file names and docs are English.
 - There are no tests. Verify in a browser: build, serve `dist/` over HTTP, check every language renders, the console is clean and the network tab shows no external requests except the release API.
 - Mobile layout: at ≤760 px the header menu collapses into the hamburger panel (`.nav-toggle`, `.nav-links`, `assets/js/nav.js`); at ≤640 px blocks are compacted (sources become a swipeable row, features switch from the JS physics layout to a two-column CSS grid via `.cloud-grid.compact` in `startClouds`, download cards shrink). Check both widths (e.g. 390 px) after layout changes.
+- `assets/img/og-logo.png`, `apple-touch-icon.png` and `favicon-48.png` are committed rasters of `logo.svg` (messengers do not read SVG); re-render them if the logo changes.
 - Do not commit unless asked.
