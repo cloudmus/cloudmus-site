@@ -163,8 +163,17 @@ class Landing {
   }
   startClouds() {
     const mouse = { x: -1e4, y: -1e4 };
-    this.onCloudMove = e => { mouse.x = e.clientX; mouse.y = e.clientY; };
-    window.addEventListener('mousemove', this.onCloudMove, { passive: true });
+    let tapTimer = 0;
+    this.onCloudMove = e => { if (e.pointerType === 'mouse') { mouse.x = e.clientX; mouse.y = e.clientY; } };
+    // Touch: a tap scatters the clouds around the finger, then they ease back.
+    this.onCloudTap = e => {
+      if (e.pointerType !== 'touch') return;
+      mouse.x = e.clientX; mouse.y = e.clientY;
+      clearTimeout(tapTimer);
+      tapTimer = setTimeout(() => { mouse.x = mouse.y = -1e4; }, 450);
+    };
+    window.addEventListener('pointermove', this.onCloudMove, { passive: true });
+    window.addEventListener('pointerdown', this.onCloudTap, { passive: true });
     document.addEventListener('mouseleave', () => { mouse.x = mouse.y = -1e4; });
     const rnd = i => { const s = Math.sin(i * 12.9898 + 4.1) * 43758.5453; return s - Math.floor(s); };
     const st = [], lay = { W: 0, n: 0, p: [] };
@@ -189,9 +198,20 @@ class Landing {
         if (compact) {
           els.forEach((el, i) => {
             if (st[i]) return;
-            st[i] = { rot: 0, sc: 1, x: 0, y: 0 };
+            st[i] = { rot: (rnd(i + 99) - .5) * 3, sc: 1, x: 0, y: 0 };
             const sh = el.querySelector('[data-cloud-shape]');
             if (sh) { sh.firstChild.innerHTML = cmSvg(i + 1); if (rnd(i + 7) > .5) sh.style.transform = 'scaleX(-1)'; }
+          });
+          els.forEach((el, i) => {
+            const s = st[i];
+            const cx = gr.left + el.offsetLeft + el.offsetWidth / 2, cy = gr.top + el.offsetTop + el.offsetHeight / 2;
+            const dx = cx - mouse.x, dy = cy - mouse.y, d = Math.hypot(dx, dy) || 1;
+            const R = 220, f = d < R ? Math.pow(1 - d / R, 2) * 34 : 0;
+            const nx = s.x + ((dx / d) * f - s.x) * .1, ny = s.y + ((dy / d) * f - s.y) * .1;
+            const still = Math.abs(nx) < .05 && Math.abs(ny) < .05;
+            if (still && !s.x && !s.y) return;
+            s.x = still ? 0 : nx; s.y = still ? 0 : ny;
+            el.style.transform = 'translate(' + s.x.toFixed(1) + 'px,' + s.y.toFixed(1) + 'px) rotate(' + s.rot.toFixed(2) + 'deg)';
           });
           this.cloudRaf = requestAnimationFrame(tick); return;
         }
