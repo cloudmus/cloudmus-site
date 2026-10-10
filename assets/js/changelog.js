@@ -68,6 +68,7 @@
   };
   const open = async () => {
     setOpen(true);
+    try { if (typeof gtag === 'function') gtag('event', 'changelog_view'); } catch {}
     if (loaded) return;
     body.innerHTML = '<p class="cl-state">' + esc(t.loading) + '</p>';
     const releases = await load();

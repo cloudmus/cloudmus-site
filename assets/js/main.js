@@ -1,6 +1,16 @@
 "use strict";
 (() => {
 const CM_SH = [[[3.4,9.4,2.9],[7.2,6.6,3.8],[11.4,7.6,3],[13,10,2.4],[8.2,9.6,3]],[[3.6,9.6,2.8],[6.6,6.8,3.4],[10.6,6,3.4],[13,9.4,2.6],[8.6,9.8,2.9]],[[2.9,10.2,2.5],[6,8.2,3],[9.6,7,3.4],[13,9.6,2.6],[7.8,10.2,2.5],[11,10.4,2.4]],[[3.8,10,2.6],[6.4,8,2.8],[10,6.4,3.8],[13.2,9.8,2.4],[9,10,2.8]]], cmSvg = k => CM_SH[k % CM_SH.length].map(([x, y, r]) => '<circle cx="' + x + '" cy="' + y + '" r="' + r + '"></circle>').join('');
+// Google Analytics events (gtag is absent when build.mjs injects no measurement ID).
+const track = (name, params) => { try { if (typeof gtag === 'function') gtag('event', name, params); } catch {} };
+document.addEventListener('click', e => {
+  const a = e.target.closest && e.target.closest('a[href]');
+  if (!a) return;
+  if (a.dataset.asset) track('download', { platform: a.dataset.asset, link_url: a.href });
+  else if (a.hasAttribute('data-release-version')) return; // changelog_view is sent when the panel opens
+  else if (/^https:\/\/github\.com\//.test(a.href)) track('github_click', { link_url: a.href });
+});
+
 // On Linux the AppImage button becomes the primary hero action.
 const swapDownloadButtons = () => {
   const a = document.getElementById('cta-primary'), b = document.getElementById('cta-secondary');
