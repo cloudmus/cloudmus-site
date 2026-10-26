@@ -9,6 +9,7 @@ document.addEventListener('click', e => {
   if (a.dataset.asset) track('download', { platform: a.dataset.asset, link_url: a.href });
   else if (a.hasAttribute('data-release-version')) return; // changelog_view is sent when the panel opens
   else if (/^https:\/\/github\.com\//.test(a.href)) track('github_click', { link_url: a.href });
+  else if (/^https:\/\/t\.me\//.test(a.href)) track('telegram_click', { link_url: a.href });
 });
 
 // On Linux the AppImage button becomes the primary hero action.

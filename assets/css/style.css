@@ -99,6 +99,8 @@ a.c-muted{color:#9a8d85}a.c-text{color:#f3ede9}a.c-soft{color:#cfc4bd}a.c-dim{co
 /* Layout blocks (desktop) */
 .nav-links{display:flex;align-items:center;gap:clamp(12px,2.4vw,28px);font-size:14px;font-weight:600;flex-wrap:wrap;justify-content:flex-end}
 .nav-tools{display:flex;align-items:center;gap:clamp(12px,2.4vw,28px)}
+.icon-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#f3ede9}
+.icon-btn svg{display:block}
 .nav-toggle{display:none}
 .hero-main{min-height:calc(100svh - 84px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(8px,1.8vh,22px);padding:clamp(4px,1.5vh,24px) 0 clamp(16px,3vh,40px)}
 .svc-grid{margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}

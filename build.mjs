@@ -52,6 +52,7 @@ const render = lang => {
       image: SITE_URL + '/assets/img/og-logo.png', screenshot: SITE_URL + '/assets/img/screenshots/player.webp',
       downloadUrl: 'https://github.com/cloudmus/cloudmus/releases/latest', license: 'https://opensource.org/licenses/MIT',
       author: { '@type': 'Person', name: 'Vladislav Navrocky' },
+      sameAs: ['https://github.com/cloudmus/cloudmus', 'https://t.me/cloudmus_app'],
     };
     head = [`<link rel="canonical" href="${urlOf(lang)}">`, `<meta property="og:url" content="${urlOf(lang)}">`,
       `<meta property="og:image" content="${SITE_URL}/assets/img/og-logo.png">`,
