@@ -47,7 +47,7 @@ const render = lang => {
     const ld = {
       '@context': 'https://schema.org', '@type': 'SoftwareApplication',
       name: 'CloudMus', description: dict['meta.description'], url: urlOf(lang), inLanguage: lang,
-      applicationCategory: 'MultimediaApplication', operatingSystem: 'Windows 10, Windows 11, Linux',
+      applicationCategory: 'MultimediaApplication', operatingSystem: 'Windows 10, Windows 11, macOS 12, Linux',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       image: SITE_URL + '/assets/img/og-logo.png', screenshot: SITE_URL + '/assets/img/screenshots/player.webp',
       downloadUrl: 'https://github.com/cloudmus/cloudmus/releases/latest', license: 'https://opensource.org/licenses/MIT',

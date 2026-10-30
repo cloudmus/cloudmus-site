@@ -6,8 +6,8 @@ Postponed improvements for search visibility of https://cloudmus.app. Constraint
 
 | Language | Queries |
 |---|---|
-| ru | музыкальный плеер, десктопный плеер, плеер для Яндекс Музыки, плеер для YouTube Music, Яндекс Музыка для Linux |
-| en | music player, desktop music player, Yandex Music player, YouTube Music desktop app / player for Windows and Linux |
+| ru | музыкальный плеер, десктопный плеер, плеер для Яндекс Музыки, плеер для YouTube Music, Яндекс Музыка для Linux, Яндекс Музыка для Mac |
+| en | music player, desktop music player, Yandex Music player, YouTube Music desktop app / player for Windows, macOS and Linux |
 | de | Musikplayer, Desktop-Musikplayer, Player für YouTube Music |
 | fr | lecteur de musique, lecteur de musique de bureau, lecteur YouTube Music |
 | es | reproductor de música, reproductor de escritorio, reproductor para YouTube Music |

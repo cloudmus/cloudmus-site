@@ -12,19 +12,51 @@ document.addEventListener('click', e => {
   else if (/^https:\/\/t\.me\//.test(a.href)) track('telegram_click', { link_url: a.href });
 });
 
-// On Linux the AppImage button becomes the primary hero action.
-const swapDownloadButtons = () => {
-  const a = document.getElementById('cta-primary'), b = document.getElementById('cta-secondary');
+// The visitor's OS becomes the primary hero action (Windows by default).
+const swapDownloadButtons = id => {
+  const a = document.getElementById('cta-primary'), b = document.getElementById(id);
   if (!a || !b) return;
   [a.innerHTML, b.innerHTML] = [b.innerHTML, a.innerHTML];
   [a.dataset.asset, b.dataset.asset] = [b.dataset.asset, a.dataset.asset];
+};
+const isMac = () => /Macintosh|Mac OS X/.test(navigator.userAgent) && navigator.maxTouchPoints < 2;
+const isLinux = () => /Linux|X11/.test(navigator.userAgent) && !/Android/.test(navigator.userAgent);
+// The visitor's download card gets the accent and the primary button.
+const markCurrentCard = os => {
+  document.querySelectorAll('.dl-card[data-os]').forEach(card => {
+    const cur = card.dataset.os === os;
+    card.classList.toggle('dl-current', cur);
+    card.querySelectorAll('.dl-btn').forEach(b => { b.classList.toggle('btn-primary', cur); b.classList.toggle('btn-ghost', !cur); });
+  });
+};
+// macOS card: Apple Silicon / Intel switch shows that build's file name, size and link.
+const setMacArch = arch => {
+  document.querySelectorAll('.dl-card[data-arch]').forEach(card => {
+    card.dataset.arch = arch;
+    card.querySelectorAll('[data-arch-pick]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.archPick === arch)));
+  });
+};
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-arch-pick]');
+  if (b) setMacArch(b.dataset.archPick);
+});
+// Apple Silicon by default; Chromium can tell an Intel Mac apart, Safari and Firefox cannot.
+const pickMacAsset = async () => {
+  try {
+    const ua = navigator.userAgentData;
+    if (!isMac() || !ua || !ua.getHighEntropyValues) return;
+    const { architecture } = await ua.getHighEntropyValues(['architecture']);
+    if (architecture !== 'x86') return;
+    setMacArch('x64');
+    document.querySelectorAll('[id^="cta-"][data-asset="mac-arm64"]').forEach(el => { el.dataset.asset = 'mac-x64'; });
+  } catch {}
 };
 
 // Latest release: direct download links, real file names, version and size.
 // The page works without this (static fallbacks point at /releases/latest).
 const RELEASE_API = 'https://api.github.com/repos/cloudmus/cloudmus/releases/latest';
 const RELEASE_CACHE_KEY = 'cloudmus.release', RELEASE_TTL = 10 * 60 * 1000;
-const ASSET_PATTERNS = { windows: /-Setup\.exe$/i, linux: /\.AppImage$/i };
+const ASSET_PATTERNS = { windows: /-Setup\.exe$/i, 'mac-arm64': /-arm64\.dmg$/i, 'mac-x64': /-x86_64\.dmg$/i, linux: /\.AppImage$/i };
 
 const readReleaseCache = () => {
   try { return JSON.parse(localStorage.getItem(RELEASE_CACHE_KEY)); } catch { return null; }
@@ -48,7 +80,7 @@ const fetchRelease = async () => {
   }
 };
 const loadRelease = async () => {
-  const release = await fetchRelease();
+  const [release] = await Promise.all([fetchRelease(), pickMacAsset()]);
   if (!release) return;
   if (release.tag) {
     document.querySelectorAll('[data-release-version]').forEach(el => {
@@ -62,7 +94,7 @@ const loadRelease = async () => {
   const mb = new Intl.NumberFormat(document.documentElement.lang || 'en');
   for (const [os, a] of Object.entries(release.assets)) {
     document.querySelectorAll('a[data-asset="' + os + '"]').forEach(el => { el.href = a.url; el.removeAttribute('target'); });
-    document.querySelectorAll('[data-release-file="' + os + '"]').forEach(el => { el.textContent = a.name; });
+    document.querySelectorAll('[data-release-file="' + os + '"]').forEach(el => { el.textContent = a.name; el.title = a.name; });
     document.querySelectorAll('[data-release-meta="' + os + '"]').forEach(el => {
       el.textContent = ' · ' + [release.tag, a.size ? mb.format(Math.round(a.size / 1048576)) + ' ' + unit : ''].filter(Boolean).join(' · ');
     });
@@ -87,7 +119,9 @@ class Landing {
     this.cloudGridRef = ref('cloud-grid');
   }
   init() {
-    if (/Linux|X11/.test(navigator.userAgent) && !/Android/.test(navigator.userAgent)) swapDownloadButtons();
+    const os = isMac() ? 'mac' : isLinux() ? 'linux' : 'windows';
+    if (os !== 'windows') swapDownloadButtons('cta-' + os);
+    markCurrentCard(os);
     this.startHero();
     this.startClouds();
     loadRelease();

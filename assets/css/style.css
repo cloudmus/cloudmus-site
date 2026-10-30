@@ -10,9 +10,11 @@ a:hover{color:#ffa07f}
 @keyframes cmDrift1{0%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,6vh) scale(1.15)}100%{transform:translate(0,0) scale(1)}}
 @keyframes cmDrift2{0%{transform:translate(0,0) scale(1.1)}50%{transform:translate(-10vw,-4vh) scale(.9)}100%{transform:translate(0,0) scale(1.1)}}
 @keyframes cmDrift3{0%{transform:translate(0,0)}50%{transform:translate(4vw,-8vh)}100%{transform:translate(0,0)}}
+.btn-secondary{display:flex;align-items:center;gap:10px;padding:clamp(11px,2vh,16px) 24px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#f3ede9;font-weight:600;font-size:16px;white-space:nowrap}
 .btn-primary:hover{background:#ff6e42!important;color:#fff!important}
 .btn-secondary:hover{background:rgba(255,255,255,.12)!important;color:#fff!important}
 .btn-ghost:hover{background:rgba(255,255,255,.14)!important;color:#fff!important}
+.link-accent{color:#ff7a4d;text-decoration:underline;text-underline-offset:3px}
 .link-accent:hover{color:#ffa07f!important}
 .lang{position:relative}
 .lang summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;height:38px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#f3ede9;font-size:13px;font-weight:700;letter-spacing:.04em}
@@ -104,9 +106,21 @@ a.c-muted{color:#9a8d85}a.c-text{color:#f3ede9}a.c-soft{color:#cfc4bd}a.c-dim{co
 .nav-toggle{display:none}
 .hero-main{min-height:calc(100svh - 84px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(8px,1.8vh,22px);padding:clamp(4px,1.5vh,24px) 0 clamp(16px,3vh,40px)}
 .svc-grid{margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
-.dl-grid{margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.dl-grid{margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.dl-btn{margin-top:auto;display:flex;justify-content:center;padding:15px 20px;border-radius:999px;font-weight:700;font-size:15px;text-align:center}
+.dl-btn.btn-primary{background:#ff5a2b;color:#fff;box-shadow:0 10px 32px -10px rgba(255,90,43,.7)}
+.dl-btn.btn-ghost{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#f3ede9}
+.dl-card.dl-current{border-color:rgba(255,90,43,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 0 1px rgba(255,90,43,.15),0 24px 60px -30px rgba(255,90,43,.55)}
+.dl-card[data-arch="arm64"] [data-for="x64"],.dl-card[data-arch="x64"] [data-for="arm64"]{display:none}
+.dl-seg{display:grid;grid-template-columns:1fr 1fr;padding:4px;border-radius:999px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08)}
+.dl-seg button{padding:9px 10px;border:0;border-radius:999px;background:transparent;color:#cfc4bd;font:600 14px/1.2 Rubik,sans-serif;cursor:pointer;transition:background .2s,color .2s}
+.dl-seg button:hover{color:#fff}
+.dl-seg button[aria-pressed="true"]{background:rgba(255,255,255,.12);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+.dl-seg button:focus-visible{outline:2px solid #ff7a4d;outline-offset:2px}
+.dl-extra{margin-top:auto;font-size:14px;line-height:1.5;color:#9a8d85}
+.dl-extra+.dl-btn{margin-top:0}
 .cloud-grid{position:relative;margin-top:56px;min-height:600px}
-.dl-file{padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.3);font-family:'JetBrains Mono',monospace;font-size:13px;color:#e8ddd6;overflow-x:auto}
+.dl-file{padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.3);font-family:'JetBrains Mono',monospace;font-size:13px;color:#e8ddd6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dl-file-pre{line-height:1.7;white-space:pre}
 .footer-row{position:relative;max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,48px);display:flex;justify-content:space-between;align-items:center;gap:16px 32px;flex-wrap:wrap;font-size:14px;color:#9a8d85}
 .footer-links{display:flex;gap:24px;flex-wrap:wrap}

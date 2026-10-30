@@ -51,7 +51,7 @@ Google Analytics 4 (measurement ID `G-YNEY7DECKV`, set in `build.mjs`) is inject
 
 On load, `assets/js/main.js` (`loadRelease`) calls `https://api.github.com/repos/cloudmus/cloudmus/releases/latest` and:
 
-- points every download link (`a[data-asset="windows|linux"]`, in the hero and in the download cards) at the release's `*-Setup.exe` / `*.AppImage` asset,
+- points every download link (`a[data-asset="windows|mac-arm64|mac-x64|linux"]`, in the hero and in the download cards) at the release's `*-Setup.exe` / `*-arm64.dmg` / `*-x86_64.dmg` / `*.AppImage` asset; the hero button of the visitor's OS becomes the primary one (on a Mac, the Intel DMG when Chromium reports an x86 CPU, otherwise Apple Silicon),
 - replaces the placeholder file names (`[data-release-file]`) and shows version and size (`[data-release-meta]`, unit from `data-unit-mb`).
 
 The version badge in the header (`[data-release-version]`) is filled from the same data; clicking it opens a changelog panel (`assets/js/changelog.js`) that loads the last releases from `/releases` on first use (also cached for 10 minutes).
